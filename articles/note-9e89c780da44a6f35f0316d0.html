@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第八章 字符串 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第八章 字符串</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B">一、字符串类型</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%AD%97%E7%AC%A6%E4%B8%B2">（一）字符串</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">（二）字符串的基本操作</a>
+<a class="tab tabH4" href="#1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5">1、字符串拼接</a>
+<a class="tab tabH4" href="#2-%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2">2、模板字符串</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C">二、字符串操作</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">（一）截取字符串</a>
+<a class="tab tabH4" href="#1-slice-%E5%87%BD%E6%95%B0">1、slice() 函数</a>
+<a class="tab tabH4" href="#2-substring-%E5%87%BD%E6%95%B0">2、substring() 函数</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2">（二）查找字符串</a>
+<a class="tab tabH4" href="#1-includes-%E5%87%BD%E6%95%B0">1、includes() 函数</a>
+<a class="tab tabH4" href="#2-indexof-%E5%87%BD%E6%95%B0">2、indexOf() 函数</a>
+<a class="tab tabH4" href="#3-startswith-%E5%92%8C-endswith">3、startsWith() 和 endsWith()</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2-replace-replaceall">（三）替换字符串 —— replace()、replaceAll()</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95">1、基本用法</a>
+<a class="tab tabH4" href="#2-%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95">2、进阶用法</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2%E5%92%8C%E5%B9%B6%E5%90%88">（四）字符串的分割和并合</a>
+<a class="tab tabH4" href="#1-%E5%88%86%E5%89%B2-split-%E5%87%BD%E6%95%B0">1、分割：split 函数</a>
+<a class="tab tabH4" href="#2-%E5%90%88%E5%B9%B6-join-%E5%87%BD%E6%95%B0">2、合并：join 函数</a>
+<a class="tab tabH4" href="#3-%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE">3、使用数组处理数据</a>
+<a class="tab tabH3" href="#%E4%BA%94-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%95%B4%E7%90%86-trim">（五）字符串的整理 —— trim</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93">三、字符串方法总结</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <p>字符串的知识本来应当放在前面，但前面漏了，因此补为第八章。</p><h2 id="一-字符串类型">一、字符串类型</h2><h3 id="一-字符串">（一）字符串</h3><p>JS 中，字符串是一种基本类型。字符串可以用 “”、``、&#39;&#39; 三种引号指定。例如，下面是一个示例字符串：</p><pre><code class="language-js">const str1 = &#39;Hello!&#39;;</code></pre><p>JS 的字符串是一个基本类型，而不是类似 C 语言那样的字符串数组，但 JS 也支持使用类似数组的索引访问字符串。不过 JS 的字符串是只读的，无法通过索引更改。</p><p>例如：</p><pre><code class="language-js">console.log(str1[0]);        // H
+str1[0] = &#39;A&#39;;
+console.log(str1[0]);        // H</code></pre><p>可以使用 str1.length 属性来查询 string 的长度。但需要注意，length 是按 UTF-16 码元计算的，例如：</p><pre><code class="language-js">console.log(&quot;😊&quot;.length);    // 2</code></pre><p>表情 😊 占据了 2 个 UTF-16 码元，因此其长度为2。</p><h3 id="二-字符串的基本操作">（二）字符串的基本操作</h3><h4 id="1-字符串拼接">1、字符串拼接</h4><p>JS 可以直接使用 + 号来合并字符串。例如：</p><pre><code class="language-js">let str1=&#39;Hello&#39;,str2=&#39;World!&#39;;
+console.log(str1 + &#39; &#39; + str2);      // Hello World!</code></pre><p>也可以写：</p><pre><code class="language-js">console.log(str1 += &quot; World&quot;);
+// 等价于 str1 = str1 + &#39; World&#39;</code></pre><p>注意：字符串中加号不仅可做数学运算，也可拼合字符串。</p><h4 id="2-模板字符串">2、模板字符串</h4><p>之前已经讲过了，方法如下：</p><pre><code class="language-js">const name = &quot;Alice&quot;,age = 20;
+console.log(`我叫${name}，今年${age}岁。`);</code></pre><p>模板字符串还可以包含表达式：</p><pre><code class="language-js">const a = 10,b = 20;
+console.log(`${a} + ${b} = ${a + b}`);      // 10 + 20 = 30</code></pre><p>模板字符串还支持多行文本：</p><pre><code class="language-js">const text = `
+第一行
+第二行
+第三行
+`;</code></pre><h2 id="二-字符串操作">二、字符串操作</h2><h3 id="一-截取字符串">（一）截取字符串</h3><h4 id="1-slice-函数">1、slice() 函数</h4><p>字符串的 slice() 函数和数组基本相同。例如：</p><pre><code class="language-js">const str = &quot;JavaScript&quot;;
+console.log(str.slice(-1));          // &quot;t&quot;
+console.log(str.slice(-3));          // &quot;ipt&quot;
+console.log(str.slice(-6, -3));      // &quot;Scr&quot;</code></pre><p>索引0是第一个字符，-1是倒数第一个字符。另外还有一个区别：字符串是按 “码元” 而非 “字符数” 来截取的。</p><p><strong>注意</strong>：这里和 Array.slice() 是一样的，索引从 0 开始，且取 start 不取 end。</p><h4 id="2-substring-函数">2、substring() 函数</h4><p>这是 JS 处理字符串的第二个方法。它与 slice 类似，但有以下两个区别：</p><ul><li><p>slice() 支持负数，而 substring() 会把负数当0；</p></li><li><p>slice() 当起点大于终点时返回空字符串，而 substring() 会调换两者并且正常返回；</p></li></ul><p>入门优先使用 slice() 函数。</p><h3 id="二-查找字符串">（二）查找字符串</h3><h4 id="1-includes-函数">1、includes() 函数</h4><p>基本使用方法和数组的 includes 类似（但不同），如下：</p><pre><code class="language-js">str.includes(&quot;string&quot;,position);</code></pre><p>返回值是布尔值（是否具有某字符串）；position 是可选参数（索引），指定了从哪里<strong>开始</strong>查找。（只能设置起点，不能设置终点。）</p><pre><code class="language-js">const str = &quot;I love JavaScript&quot;;
+console.log(str.includes(&quot;JavaScript&quot;));        // true
+console.log(str.includes(&quot;love&quot;,8));            // false</code></pre><h4 id="2-indexof-函数">2、indexOf() 函数</h4><p>查找字符串第一次出现的位置。如果查不到，则返回-1。基本语法如下：</p><pre><code class="language-js">str.indexOf(&quot;string&quot;,index);</code></pre><p>例如：</p><pre><code class="language-js">const str = &quot;Hello JavaScript&quot;;
+console.log(str.indexOf(&quot;JavaScript&quot;));          // 6
+console.log(str.indexOf(&quot;Hello&quot;));               // 0
+console.log(str.indexOf(&quot;Python&quot;));              // -1</code></pre><p>如果只是要判断是否存在字符串，建议直接使用 includes()。</p><p>还可以使用 lastIndexOf() 来倒过来查找，因为 indexOf 是从左到右查找的。</p><h4 id="3-startswith-和-endswith">3、startsWith() 和 endsWith()</h4><p>判断字符串是否以指定字符串开始/结束。例如：</p><pre><code class="language-js">const filename = &quot;picture.png&quot;;
+console.log(filename.startsWith(&quot;pic&quot;));        // true
+console.log(filename.startsWith(&quot;png&quot;));        // false
+console.log(filename.endsWith(&quot;png&quot;));          // true</code></pre><p>注意：includes、startsWith、endsWith 中动词都是第三人称单数形式。</p><h3 id="三-替换字符串-replace-replaceall">（三）替换字符串 —— replace()、replaceAll()</h3><h4 id="1-基本用法">1、基本用法</h4><p>replace() 函数的基本用法是：</p><pre><code class="language-js">str.replace(searchValue, newValue);</code></pre><p>例如：</p><pre><code class="language-js">const str = &quot;Hello World&quot;;
+const result = str.replace(&quot;World&quot;, &quot;JavaScript&quot;);
+console.log(str);          // Hello World
+console.log(result);       // Hello JavaScript</code></pre><p>注意 replace 函数不会修改原字符串 str，而是新建一个字符串 result，这和数组的 slice() 等是一样的。</p><h4 id="2-进阶用法">2、进阶用法</h4><p>replace() 默认只会替换第一次查找到的部分。例如：</p><pre><code class="language-js">const str = &quot;apple apple apple&quot;;
+console.log(str.replace(&quot;apple&quot;, &quot;banana&quot;));        // banana apple apple</code></pre><p>replace() 还支持使用正则表达式进行高级替换（先不深入研究），例如：</p><pre><code class="language-js">const str = &quot;apple apple apple&quot;;
+console.log(str.replace(/apple/g, &quot;banana&quot;));        // banana banana banana</code></pre><p>这里的 /apple/g 是正则表达式，g 表示全局匹配。</p><p>此外还有 replaceAll() 函数，可以批量替换字符串中所有符合条件的部分，用法和 replace() 函数类似。</p><h3 id="四-字符串的分割和并合">（四）字符串的分割和并合</h3><p>这里的分割和合并不是简单的 str1 + str2 或 str1.slice()，而是利用 “数据 + 分隔符 + 数据 ······” 的方式拆分和组织数据。</p><h4 id="1-分割-split-函数">1、分割：split 函数</h4><p>split() 函数可以根据给定的分隔符，将字符串分割为数组。其基础语法如下：</p><pre><code class="language-js">str.split(separator);</code></pre><p>例如：</p><pre><code class="language-js">const str = &quot;apple,banana,orange&quot;;
+const fruits = str.split(&quot;,&quot;);
+console.log(fruits);</code></pre><p>结果是：</p><pre><code class="language-js">[&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;]</code></pre><p>如果传入的是 “”，则 split() 会按码元拆分。对于英文来说，按码元拆分就是按字符拆分，例如：</p><pre><code class="language-js">const str = &quot;apple&quot;;
+console.log(str.split(&quot;&quot;));          // [&#39;a&#39;,&#39;p&#39;,&#39;p&#39;,&#39;l&#39;,&#39;e&#39;]</code></pre><p>如果不传入参数，则 split <strong>不切分字符串</strong>。（这和后面的 join() 是不同的！）</p><p>split() 显然不会修改原字符串。</p><h4 id="2-合并-join-函数">2、合并：join 函数</h4><p>join 函数类似于 split 函数的 “逆操作”，可以使用分隔符将数组转化为字符串。其语法如下：</p><pre><code class="language-js">arr.join(separator);</code></pre><p>例如：</p><pre><code class="language-js">const arr1=[&#39;h&#39;,&#39;e&#39;,&#39;l&#39;,&#39;l&#39;,&#39;o&#39;];
+const arr2=[&#39;apple&#39;,&#39;banana&#39;,&#39;orange&#39;];
+console.log(arr1.join(&#39;&#39;));        // hello
+console.log(arr2.join(&#39;,&#39;));       // apple,banana,orange</code></pre><p>如果不传入参数，默认使用英文逗号作为分隔符。</p><h4 id="3-使用数组处理数据">3、使用数组处理数据</h4><p>使用 split 函数和 join 函数可以使字符串和数组相互转换，从而使用数组方法来处理字符串。（trim 函数下面讲）</p><pre><code class="language-js">const text = &quot;HTML, CSS, JavaScript&quot;;
+const languages = text.split(&quot;,&quot;);
+const result = languages.map(item =&gt; item.trim());
+console.log(result);
+// [&quot;HTML&quot;, &quot;CSS&quot;, &quot;JavaScript&quot;]</code></pre><h3 id="五-字符串的整理-trim">（五）字符串的整理 —— trim</h3><p>当一个字符串中出现空格、制表符、换行符等内容时，有时我们希望去除这些内容，从而更加准确地对字符串执行判断。例如，用户输入的用户名是 &quot;                    Mac Taylor         &quot;，则我们希望把它转化为 “Mac Taylor” 再进行处理，这时就可以使用 trim() 函数。</p><p>例如：</p><pre><code class="language-js">const str=&#39;     Mac Taylor        &#39;;
+console.log(str.trim());        // Mac Taylor</code></pre><p>多行空格是这样的：</p><pre><code class="language-js">const a=`
+
+Hello World!
+
+`;
+console.log(a);
+console.log(a.trim());
+</code></pre><p>输出分别是：</p><pre><code class="language-js">(空行)
+(空行)
+Hello World!
+(空行)</code></pre><pre><code class="language-js">Hello World!</code></pre><p>注意：trim() 指令只能删除首尾的空白，不会删除中间的空白。</p><p>如果想只删除首/尾的空白，可用 trimStart() 与 trimEnd()。注意，trim 没有参数，但要写 ()。</p><h2 id="三-字符串方法总结">三、字符串方法总结</h2><p>字符串和数组具有某些公共方法，下面是一张总结表格。</p><div class="md-table"><table><thead><tr><th style="text-align:center">方法</th><th style="text-align:center">字符串</th><th style="text-align:center">数组</th></tr></thead><tbody><tr><td style="text-align:center"><code>slice()</code></td><td style="text-align:center">支持</td><td style="text-align:center">支持</td></tr><tr><td style="text-align:center"><code>includes()</code></td><td style="text-align:center">支持</td><td style="text-align:center">支持</td></tr><tr><td style="text-align:center"><code>indexOf()</code></td><td style="text-align:center">支持</td><td style="text-align:center">支持</td></tr><tr><td style="text-align:center"><code>lastIndexOf()</code></td><td style="text-align:center">支持</td><td style="text-align:center"><strong>支持</strong></td></tr><tr><td style="text-align:center"><code>map()</code></td><td style="text-align:center">——</td><td style="text-align:center">支持</td></tr><tr><td style="text-align:center"><code>filter()</code></td><td style="text-align:center">——</td><td style="text-align:center">支持</td></tr><tr><td style="text-align:center"><code>split()</code></td><td style="text-align:center">支持</td><td style="text-align:center">——</td></tr><tr><td style="text-align:center"><code>join()</code></td><td style="text-align:center">——</td><td style="text-align:center">支持</td></tr></tbody></table></div>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

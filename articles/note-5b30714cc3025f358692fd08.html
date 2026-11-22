@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第一章~第二章 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第一章~第二章</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">第一章 基础知识</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">1、基础语法</a>
+<a class="tab tabH4" href="#2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2、数据类型</a>
+<a class="tab tabH4" href="#3-%E5%AD%97%E7%AC%A6%E4%B8%B2">3、字符串</a>
+<a class="tab tabH2" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1">第二章 数组和对象</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%95%B0%E7%BB%84">（一）数组</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF">1、基础信息</a>
+<a class="tab tabH4" href="#2-%E9%81%8D%E5%8E%86">2、遍历</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%AF%B9%E8%B1%A1">（二）对象</a>
+<a class="tab tabH4" href="#1-%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F">1、定义方式</a>
+<a class="tab tabH4" href="#2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7">2、对象的属性</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%80%BC%E7%9A%84%E5%A4%8D%E5%88%B6%E5%92%8C%E5%BC%95%E7%94%A8">（三）值的复制和引用</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="第一章-基础知识">第一章 基础知识</h2><p>JavaScript 是一门编程语言，DOM 中 getElement 等都是提供给 JavaScript 的 API，而非 JS 本身。JS 本身也可以写后端，如 NodeJS。</p><h4 id="1-基础语法"><strong>1、基础语法</strong></h4><p>JavaScript 的基本内容，如 for、if 等，与 C 语言差距不大，可以直接复用。</p><p>注意：JavaScript 中 == 表示宽松相等（执行类型转换），而 === 表示严格相等（不执行类型转换）。例如：</p><pre><code class="language-js">console.log(1==&quot;1&quot;);      //true
+console.log(1===&quot;1&quot;);     //false</code></pre><p>补一个三元运算符，C 语言中有，但我 C 语言学习时漏了：</p><pre><code class="language-text">语句 条件 ? 若为True则采用的表达式 : 若为False则采用的表达式 ;</code></pre><h4 id="2-数据类型"><strong>2、数据类型</strong></h4><p>JS 没有严格的类型区分，不执行严格的数据类型检查。例如 int、double 等（统一为number）。</p><p>JS 使用 let 定义变量、而 const 定义固定量（不能简单理解为常量。例如，const a=对象A，则不能将 a 指定为其他对象，但可以通过a改变对象A的属性内容）。</p><p>在 JS 中，若数据运算得不到有效的数字/值缺失时，一般有两种值：</p><ul><li><p>NaN —— <strong>非法数字</strong>，Not a Number，例如 0/0 的结果。NaN属于js的number类型。</p></li></ul><pre><code class="language-js">console.log(0 / 0);            // NaN
+console.log(&quot;abc&quot; - 1);        // NaN
+//注意：1 / 0 返回的是 Infinity（无穷大）</code></pre><ul><li><p>undefined —— <strong>未定义值</strong>，即值缺失/未赋值。</p></li></ul><pre><code class="language-js">let b;
+console.log(b);                //undefined</code></pre><p>此外还有一个 Null，是显示表示“空值”的写法。</p><h4 id="3-字符串"><strong>3、字符串</strong></h4><p>可以用反引号来声明字符串模板:</p><pre><code class="language-text">`I am ${变量}`</code></pre><p>JS 中双引号和单引号都可以定义字符串，两者没有区别，只是可以减少转义符（\）的使用。例如：</p><pre><code class="language-js">const s1 = &quot;It&#39;s ok&quot;;      // 里面单引号直接写
+const s2 = &#39;It\&#39;s ok&#39;;     // 里面的单引号要转义</code></pre><h2 id="第二章-数组和对象">第二章 数组和对象</h2><h3 id="一-数组">（一）数组</h3><h4 id="1-基础信息"><strong>1、基础信息</strong></h4><p>JS 的数组和 C 语言一样，下标都是从 0 开始的。</p><pre><code class="language-js">let arr=[1,2,3,4];
+let arr=[];               //定义一个空的数组。</code></pre><p>数组内部元素可以是不同类型的（甚至可以存对象），长度也可以不定。arr.length 可取数组长度（可用于判断数组是否为空）。</p><ul><li><p>arr.push(x) 在末尾加元素。</p></li><li><p>arr.pop() 在末尾删除一个元素。</p></li><li><p>arr.unshift(x) 在开头加元素。</p></li><li><p>arr.shift() 在开头删除一个元素。</p></li></ul><h4 id="2-遍历"><strong>2、遍历</strong></h4><p>for of 是迭代遍历。</p><pre><code class="language-js">for (const score of scores) {
+  console.log(score);
+}</code></pre><p>forEach 对某个元素执行特定函数【function（元素变量马上定义）】。forEach 的返回值是 undefined。</p><pre><code class="language-js">arr.forEach(item =&gt; work(item,another));
+arr.forEach(work);</code></pre><p>map（）新建数组（<strong>转换</strong>原有元素）。</p><pre><code class="language-js">newarr=arr.map(n =&gt; n * 2);
+newarr=arr.map(student =&gt; student.name);</code></pre><p>filter（）新建数组（<strong>挑选</strong>原有元素）。</p><pre><code class="language-js">newarr=arr.filter(score =&gt; score&gt;=60);</code></pre><p>注意：filter 本质上是执行一个函数，然后根据这个函数的返回值是 “truthy” 还是 “falsy” 类来决定某个元素是否保留。</p><p>filter 和 map 函数的返回值都是新的数组。</p><h3 id="二-对象">（二）对象</h3><h4 id="1-定义方式">1、定义方式</h4><pre><code class="language-js">const student= {
+  name: &quot;&quot;,
+  age:18,
+  score:90
+}
+const a = {};            //定义一个空对象</code></pre><p>后定义的属性会覆盖前面定义的属性。注意属性结尾是逗号而非分号。</p><h4 id="2-对象的属性"><strong>2、对象的属性</strong></h4><p>操作属性的方法：</p><ul><li><p>取属性：student.name 或 student[&quot;name&quot;]（方括号可以用变量作为属性）</p></li><li><p>添加新属性：student.id=95;</p></li><li><p>删除属性：delete student.id;</p></li></ul><p>对象的属性值也可以是函数，如：</p><pre><code class="language-js">const student={
+  introduce: function() { console.log(`${this.name}`) }
+}
+student.introduce();</code></pre><p>在这种情况下，this 指代的是对象本身。</p><h3 id="三-值的复制和引用">（三）值的复制和引用</h3><p>基本类型：和C语言一样，新建+复制。</p><p>对象、数组：“a，b” 等只是数组/对象的一个引用符号，因此a=数组、b=a，修改b会影响a。</p><p>如果要复制，使用展开语法 ...a，例如 [...a]、{ ...a }（但对象这样子只是浅拷贝，只复制第一层）</p><p>例如：</p><pre><code class="language-js">const a = {
+    name: &quot;Alice&quot;,
+    address: {
+        city: &quot;Tokyo&quot;
+    }
+};</code></pre><p>用 b= { ...a } 时，成功把 name 直接复制到了 b 中，但 address 作为 a 这个对象的属性，本身也是一个对象，因此 b 复制时只复制了其引用。</p><p>要深拷贝，使用语法 structuredClone()。</p><p>同样地，数组也有类似的情况。</p><pre><code class="language-js">const a=[1,2,3,4];
+console.log(...a);        //1 2 3 4</code></pre><p>上面是 ... 展开语法的实质——它会将可迭代的对象的元素依次展开为独立的实参。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

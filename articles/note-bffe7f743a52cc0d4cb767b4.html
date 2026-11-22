@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CSS学习——伪类与伪元素 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">CSS学习——伪类与伪元素</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E4%BB%8B%E7%BB%8D">一、介绍</a>
+<a class="tab tabH4" href="#%E7%AB%A0%E8%8A%82">章节</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E4%BC%AA%E7%B1%BB">二、伪类</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E4%BA%A4%E4%BA%92%E4%BC%AA%E7%B1%BB">（一）交互伪类</a>
+<a class="tab tabH4" href="#1-hover-active">1、hover、active</a>
+<a class="tab tabH4" href="#2-focus-focus-within">2、focus、focus-within</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB">（二）结构伪类</a>
+<a class="tab tabH4" href="#1--child-%E4%BC%AA%E7%B1%BB">1、-child 伪类</a>
+<a class="tab tabH4" href="#2--of-type-%E4%BC%AA%E7%B1%BB">2、-of-type 伪类</a>
+<a class="tab tabH4" href="#3-nth--%E4%BC%AA%E7%B1%BB">3、nth-() 伪类</a>
+<a class="tab tabH4" href="#4-root-%E4%BC%AA%E7%B1%BB">4、root 伪类</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%85%B3%E7%B3%BB%E4%BC%AA%E7%B1%BB">（三）关系伪类</a>
+<a class="tab tabH4" href="#1-not-%E4%BC%AA%E7%B1%BB">1、not() 伪类</a>
+<a class="tab tabH4" href="#2-is-%E5%92%8C-where-%E4%BC%AA%E7%B1%BB">2、is() 和 where() 伪类</a>
+<a class="tab tabH4" href="#3-has-%E4%BC%AA%E7%B1%BB">3、has() 伪类</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E5%B5%8C%E5%A5%97%E8%AF%AD%E6%B3%95">（四）嵌套语法</a>
+<a class="tab tabH3" href="#%E4%BA%94-%E6%89%A9%E5%B1%95-%E8%A1%A8%E5%8D%95%E4%BC%AA%E7%B1%BB">（五）扩展：表单伪类</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E4%BC%AA%E5%85%83%E7%B4%A0">三、伪元素</a>
+<a class="tab tabH3" href="#%E4%B8%80-before-%E5%92%8C-after">（一）::before 和 ::after</a>
+<a class="tab tabH4" href="#1-dom-%E7%BB%93%E6%9E%84">1、DOM 结构</a>
+<a class="tab tabH4" href="#2-content-%E5%B1%9E%E6%80%A7%E5%92%8C-before-after-%E8%BF%90%E7%94%A8">2、content 属性和 ::before ::after 运用</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%85%B6%E4%BB%96%E4%BC%AA%E5%85%83%E7%B4%A0">（二）其他伪元素</a>
+<a class="tab tabH4" href="#1-selection">1、::selection</a>
+<a class="tab tabH4" href="#2-placeholder">2、::placeholder</a>
+<a class="tab tabH4" href="#3-marker">3、::marker</a>
+<a class="tab tabH4" href="#4-first-line-%E5%92%8C-first-letter">4、::first-line 和 ::first-letter</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E4%BC%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%B5%8C%E5%A5%97%E8%AF%AD%E6%B3%95">（三）伪元素的嵌套语法</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E7%BB%BC%E5%90%88%E4%BD%BF%E7%94%A8">（四）综合使用</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-介绍">一、介绍</h2><p>伪类和伪元素是 CSS3 的重要特性之一。它允许开发者仅使用 CSS，就能根据元素的一些特定状态或属性（例如元素被鼠标点击了、元素是父容器的第一个子元素）来对元素（或者它的一部分）的样式进行修改，从而避免了使用大量 JS 代码来修改样式的麻烦操作。</p><h4 id="章节"></h4><ul><li><p>伪类用于描述一个元素的特定状态或条件（例如 hover、focus），从而选择符合条件的元素。</p></li><li><p>伪元素则是用于选择或创建元素的某个特定部分（例如 first-letter、before），从而实现一定的样式效果。</p></li></ul><h2 id="二-伪类">二、伪类</h2><p>伪类使用 :（单个冒号）来表述。注意：大部分的伪类都作用于元素本身，而不是“元素的子元素”或“父元素”。</p><h3 id="一-交互伪类">（一）交互伪类</h3><p>交互伪类描述的是元素的交互状态。</p><h4 id="1-hover-active">1、hover、active</h4><pre><code class="language-css">.diva:hover {...}
+.diva:active {...}</code></pre><p>这两个伪类分别描述了鼠标移动到 diva 上、鼠标点击 diva 时的状态。</p><h4 id="2-focus-focus-within">2、focus、focus-within</h4><pre><code class="language-css">.diva:focus {...}
+.diva:focus-within {...}</code></pre><p>这两个伪类描述了元素作为焦点时的状态（例如，文本输入框被点击了，等待用户输入）。</p><p>focus-within 和 focus 的区别是：focus 要求获得焦点的必须是元素本身，而 focus-within 则只要元素<strong>或元素的子元素</strong>获得焦点就可以被触发。例如，文本输入框被点击了，整个表单都变得高亮，这时就采用 focus-within。</p><h3 id="二-结构伪类">（二）结构伪类</h3><p>结构性伪类描述的是元素在其 DOM 树结构中的位置属性。</p><h4 id="1--child-伪类"><strong>1、-child 伪类</strong></h4><pre><code class="language-css">.parentDiv {
+  .diva:first-child {...}
+  .diva:last-child {...}
+  .diva:only-child {...}
+}
+</code></pre><p>这三种伪类分别描述的是：parentDiv 下的第一个 .diva、最后一个 .diva、唯一的一个 .diva。这种选择器很好用，因为有时相连的一堆同种元素，其首尾元素可能需要一些特殊属性（如加上一半的 border-radius）。</p><h4 id="2--of-type-伪类"><strong>2、-of-type 伪类</strong></h4><p>如果要区分<strong>类型</strong>（如第一个 h1），则需要使用 -of-type 伪类。例如：</p><pre><code class="language-css">.parentDiv {
+  p:first-of-type {...}
+  h1:last-of-type {...}
+}</code></pre><p>这两种伪类分别选中的是第一个同种元素、最后一个同种元素。这里显然没有 :only-of-type。</p><h4 id="3-nth--伪类">3、nth-() 伪类</h4><p>这是 CSS 伪类的一个重要部分，它允许根据数学表达式来确定选中第几个元素。它包含：</p><pre><code class="language-css">diva:nth-child() {...}
+diva:nth-of-type() {...}</code></pre><p>它们分别意味着取第 n 个元素、第 n 个同类元素。</p><p>括号内可以直接写数字，表示取第 n 个元素。例如，下面是取第二个元素：</p><pre><code class="language-css">diva:nth-child(2) { color:red; }</code></pre><p>还可以写数学表达式。例如：</p><pre><code class="language-css">diva:nth-child(odd) { color:red }
+diva:nth-child(even) { color:red }</code></pre><p>odd 是奇数的意思，even 是偶数的意思。这代表着选中第奇数个和第偶数个元素。</p><pre><code class="language-css">diva:nth-child(3n+1) { color:red }</code></pre><p>这代表着取第 1、4、7、10 ···· 个元素。</p><p>这样的功能非常有用。例如，有时我们可能想给一个表格设置样式、期望行的背景颜色以一定的规律变化，这里就可以用到 nth- 伪类。</p><h4 id="4-root-伪类">4、root 伪类</h4><p>这是一个特殊的伪类，指代整个文档的根元素（&lt;html&gt;）。例如：</p><pre><code class="language-css">:root {
+  background-color:blue;
+}</code></pre><p>这意味着 &lt;html&gt; 元素的背景颜色为蓝色。</p><p>:root 不能简单等价于 html 选择器，因为 :root 的优先级比 html 高。</p><h3 id="三-关系伪类">（三）关系伪类</h3><p>关系伪类表示的是具有某种选择器条件的元素，需要配合其他 CSS 选择器使用。</p><p>下面的三个关系伪类，其作用有些类似编程语言中 IF 条件判断的 NOT 和 OR。</p><h4 id="1-not-伪类">1、not() 伪类</h4><p>表示的是不具有某种选择器的元素。例如：</p><pre><code class="language-css">.diva:not(img) {
+  color:red;
+}
+.diva:not(:last-child) {
+  color:red;
+}</code></pre><p>上面的内容分别表示的是：不是 img 的 diva 元素和不是其父元素的最后一个子元素的 diva 元素。</p><h4 id="2-is-和-where-伪类">2、is() 和 where() 伪类</h4><p>用于把多个选择器合并起来，语法（以 is 为例）是 is(a,b,c)。例如：</p><pre><code class="language-css">.diva:is(img,#me,.box) {
+  border-radius:20px;
+}</code></pre><p>上面的伪类选中了自己同时是 img、#me 或 .box 中一者的 diva 元素。其效果和下面的 CSS 是等价的：</p><pre><code class="language-css">img.diva,
+#me.diva,
+.box.diva {
+    border-radius:20px;
+}</code></pre><p>where() 的语法和作用与 is() 基本相同，但 where() 的优先度是始终最低的，这使它在 CSS 的属性覆盖上有一些作用。</p><h4 id="3-has-伪类">3、has() 伪类</h4><p>用于选中具有某种属性的<strong>子元素</strong>的父元素（is、where 选中的是父元素本身）。例如：</p><pre><code class="language-css">.parentDiv:has(img) {}</code></pre><p>选中的是具有 img 子元素的 parentDiv。</p><p>has()、is()、where() 的选择器本身还能再嵌套，这样就能实现更多从前需要 JS 才能实现的复杂功能。例如：</p><pre><code class="language-css">.parentDiv:has(.content &gt; .button:hover) {
+    background-color: #ffecec;
+}</code></pre><p>选中的是具有直属于 .content、同时又处在被 hover 状态下的 .button 对应的 parentDiv。</p><p>has 方法非常有用。在 has 方法之前，CSS 只能根据父元素选择子元素（.parentDiv &gt; .me），而 has 方法则允许 CSS 根据子元素选择父元素。</p><p>例如，如果我们要实现 “当按钮被 hover 时，整个 parentDiv 背景变白”，可以这么写：</p><pre><code class="language-css">.parentDiv:has(.button:hover) {
+  background-color:white;
+}</code></pre><h3 id="四-嵌套语法">（四）嵌套语法</h3><p>伪类支持在嵌套语法中使用。例如：</p><pre><code class="language-css">.div:hover {
+  p { color:red; }
+}</code></pre><p>这段 CSS 的含义是：当 .div 被 hover 时，其下属的 p 元素变为红色。</p><p>此外，伪类的嵌套语法也可以加在嵌套的内部，例如：</p><pre><code class="language-css">.parentDiv {
+  :last-child {...}
+  &gt;:first-child {...}
+}</code></pre><p>这两个选择器分别表示：在 parentDiv 的子元素中，所有容器（不包括 parentDiv）的最后一个子元素、parentDiv 直属的第一个子元素。</p><p>如果想在嵌套中表示 parentDiv 的某种属性，则需要使用 &amp; 符号。例如：</p><pre><code class="language-css">.parentDiv {
+  &amp;:hover {...}
+}</code></pre><p>这等价于 .parentDiv:hover {}。</p><h3 id="五-扩展-表单伪类">（五）扩展：表单伪类</h3><p>这部分涉及到了 HTML 表单（HTTP GET/POST方法）的元素处理方式，暂时不做深入研究。</p><div class="md-table"><table><thead><tr><th>伪类</th><th>含义</th></tr></thead><tbody><tr><td>:enabled</td><td>可用的表单元素</td></tr><tr><td>:disabled</td><td>被禁用的表单元素</td></tr><tr><td>:checked</td><td>已选中的复选框或单选框</td></tr><tr><td>:required</td><td>必填字段</td></tr><tr><td>:optional</td><td>非必填字段</td></tr><tr><td>:valid</td><td>满足验证条件</td></tr><tr><td>:invalid</td><td>不满足验证条件</td></tr><tr><td>:read-only</td><td>只读字段</td></tr><tr><td>:placeholder-shown</td><td>正在显示 placeholder 的输入框</td></tr></tbody></table></div><h2 id="三-伪元素">三、伪元素</h2><p>伪类描述的是 “具有某种性质的现有元素”，而伪元素则是将现有元素的一部分 “元素化”，使之能参与 CSS 的样式描述。例如，伪类可以描述 “一个现有的 button 被 hover 后所应当具有的样式”，而伪元素可以描述 “一段英文文本的第一个字母所需要具有的样式”。</p><p>伪类使用 :: 来表述（两个英文冒号）。</p><h3 id="一-before-和-after">（一）::before 和 ::after</h3><h4 id="1-dom-结构">1、DOM 结构</h4><p>经典的两个伪元素，它们可分别在 div 内的前后位置插入两个 “子元素”，并且设定属性。</p><pre><code class="language-css">.diva::before {
+  content:&quot;2026&quot;;
+}
+.diva::after {
+  content:&quot;2027&quot;;
+}</code></pre><p>这段 CSS 参与生成的 DOM 结构如下：</p><pre><code class="language-html">&lt;div class=&quot;diva&quot;&gt;
+::before
+&lt;!--省略 diva 原有内容--&gt;
+::after
+&lt;/div&gt;</code></pre><h4 id="2-content-属性和-before-after-运用">2、content 属性和 ::before ::after 运用</h4><p>content 属性决定了 ::before、::after 在 DOM 结构中的显示内容。例如：</p><pre><code class="language-css">::before { content:&quot;Hello&quot; }</code></pre><p>这段内容在 DOM 中可以认为等价于：</p><pre><code class="language-html">&lt;div&gt;Hello&lt;/div&gt;</code></pre><p>::before、::after 强制要求 content 属性，否则不会显示；如果不需要 content 属性，则可设置 content:&quot;&quot;。</p><p>content 中存放的文字主要是装饰作用的。例如一个列表，每行的行首都需要加一个 “★” 图标，则可以这样写：</p><pre><code class="language-css">.line::before {
+  content:&quot;★&quot;;
+}</code></pre><p>这样写可以免去 HTML 中利用 JS 批量给元素的文本内容增加 ★ 符号的工作量。</p><p>强烈建议 content 中只存放装饰性文字，而不存放重要的语义内容。推荐的前端模式是：HTML 存放结构和内容，CSS 存放样式，而 JS 存放动作。使用 HTML 存放样式（如 style=&quot;&quot;）、CSS 存放内容等会打乱这个模式，导致前端项目难以维护。</p><p>此外，::before、::after 本身也可以直接作为普通元素使用，用来做装饰性的色块等。</p><h3 id="二-其他伪元素">（二）其他伪元素</h3><p>其他伪元素基本上都是对元素内的文本内容（如 first-letter ）进行操作的。</p><h4 id="1-selection">1、::selection</h4><p>div 中文字被选中时采用的样式。</p><h4 id="2-placeholder">2、::placeholder</h4><p>input 的占位文本的样式。</p><h4 id="3-marker">3、::marker</h4><p>列表中项目的序号（数字、符号）的样式。</p><h4 id="4-first-line-和-first-letter">4、::first-line 和 ::first-letter</h4><p>块级元素的文本内容中第一行、第一个字母（或数字、符号等）的样式。</p><h3 id="三-伪元素的嵌套语法">（三）伪元素的嵌套语法</h3><p>伪元素的嵌套语法和伪类是类似的。例如：</p><pre><code class="language-css">.parentDiv {
+  &amp;::before {
+    content:&quot;Hello&quot;;
+  }
+  &gt;::after {
+    content:&quot;World&quot;;
+  }
+  ::selection {
+    background-color:#0068AD;
+  }
+}</code></pre><p>上面三个选择器，选中的分别是（假设子元素为 diva）：.parentDiv 的 ::before，.parentDiv 直属的 .diva 的 ::after，.parentDiv 下的所有元素的 ::selection。</p><h3 id="四-综合使用">（四）综合使用</h3><p>同时使用两者时，伪类要在伪元素的前面，例如：</p><pre><code class="language-css">.div:active::before {
+  content:&quot;&quot;;
+}</code></pre>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

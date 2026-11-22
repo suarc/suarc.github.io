@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第六章 构造函数与原型链 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第六章 构造函数与原型链</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">一、构造函数</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-2">（一）构造函数</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E7%A1%80%E6%96%B9%E6%B3%95">1、基础方法</a>
+<a class="tab tabH4" href="#2-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">2、注意事项</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84-new">（二）构造函数中的 new</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB">（三）构造函数和普通函数的区别</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE">二、原型对象与原型链</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%BC%95%E5%85%A5">（一）引入</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1">（二）原型对象</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%8E%9F%E5%9E%8B%E9%93%BE">（三）原型链</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7%E5%92%8C%E5%AF%B9%E8%B1%A1%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B1%9E%E6%80%A7">（四）原型属性和对象自己的属性</a>
+<a class="tab tabH4" href="#1-%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7">1、如何判断是不是原型属性</a>
+<a class="tab tabH4" href="#2-%E5%8C%BA%E5%88%86%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7%E5%92%8C%E8%87%AA%E8%BA%AB%E5%B1%9E%E6%80%A7">2、区分原型属性和自身属性</a>
+<a class="tab tabH4" href="#3-%E4%BF%AE%E6%94%B9%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7">3、修改原型属性</a>
+<a class="tab tabH3" href="#%E4%BA%94-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8E%9F%E5%9E%8B%E6%9C%BA%E5%88%B6">（五）深入理解原型机制</a>
+<a class="tab tabH4" href="#1-%E6%9F%A5%E7%9C%8B%E5%8E%9F%E5%9E%8B">1、查看原型</a>
+<a class="tab tabH4" href="#2-prototype-%E5%92%8C-prototype-%E7%9A%84%E5%8C%BA%E5%88%AB">2、.prototype 和 [[Prototype]] 的区别</a>
+<a class="tab tabH4" href="#3-%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E6%8E%A8%E5%B9%BF">3、原型链的推广</a>
+<a class="tab tabH2" href="#%E4%B8%89-js-%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95">三、JS 中的方法</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95">（一）原型方法</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95">（二）静态方法</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%AF%B9%E8%B1%A1%E8%87%AA%E8%BA%AB%E6%96%B9%E6%B3%95">（三）对象自身方法</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E6%96%B9%E6%B3%95%E7%9A%84%E5%BB%B6%E7%94%B3%E8%B0%83%E7%94%A8">（四）方法的延申调用</a>
+<a class="tab tabH2" href="#%E5%9B%9B-%E5%A4%8D%E4%B9%A0-%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90">四、复习（实例分析）</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-构造函数">一、构造函数</h2><h3 id="一-构造函数-2">（一）构造函数</h3><h4 id="1-基础方法">1、基础方法</h4><p>假设我们需要创建 100 个学生对象，每个学生都有姓名、年龄、自我介绍方法，按照之前的知识，我们需要这么创建：</p><pre><code class="language-js">const student1 = {
+    name: &quot;Alice&quot;,
+    age: 20,
+    introduce: function() {
+        console.log(`我叫${this.name},今年${this.age}岁`);
+    }
+};
+············
+const student100 = {
+    name: &quot;Bob&quot;,
+    age: 21,
+    introduce: function() {
+        console.log(`我叫${this.name},今年${this.age}岁`);
+    }
+};</code></pre><p>显然，这种写法会造成大量的重复内容。为了避免这种情况，我们可以考虑<strong>把对象也封装成函数</strong>，从而实现批量创建对象。</p><p>例如：</p><pre><code class="language-js">function Student(name, age) {
+    this.name = name;
+    this.age = age;
+    this.introduce = function() {
+        console.log(`我叫${this.name}，今年${this.age}岁`);
+    };
+}
+const student1 = new Student(&quot;Alice&quot;, 20);
+const student2 = new Student(&quot;Bob&quot;, 21);
+</code></pre><p>这种被设计为通过 new 调用、用于创建对象的函数（如图中的 Student() ），通常称为<strong>构造函数</strong>。构造函数的基本使用方法是：使用 function 定义一个函数A，用 this.key 定义对象的属性，然后在函数外通过 new 语法 + 函数A + <strong>实参</strong> 来创建对象。</p><h4 id="2-注意事项">2、注意事项</h4><p>构造函数有几个注意事项：</p><ul><li><p>1、构造函数常使用 <strong>大驼峰命名法 </strong>来命名，以提醒开发者 “此函数是构造函数，需要使用 new 表达式构造”。</p></li><li><p>2、构造函数内常使用 this 设置待创建的对象的属性和方法。</p></li><li><p>3、如果构造函数显式设置了 return 一个对象，则 new 表达式得到的结果仍然是 return 的内容，而非 this 新建的对象（但<strong>仍然会按 this 新建对象</strong>）。如果 return 的是普通值，则仍然返回按 this 新建的对象。</p></li></ul><p>我们之前学过的集合定义方法（const a=new Set(数组) ）就属于构造函数的运用。</p><h3 id="二-构造函数中的-new">（二）构造函数中的 new</h3><p>new Student(...) 的执行过程是这样的（如果构造函数没有显式 return）：</p><ul><li><ol><li><p>创建一个新的空对象；</p></li></ol></li><li><ol start="2"><li><p>建立对象与构造函数原型之间的联系（现在先不用了解这是什么）；</p></li></ol></li><li><ol start="3"><li><p>将构造函数内部的 this 指向这个新对象；</p></li></ol></li><li><ol start="4"><li><p>执行构造函数，传入实参，根据构造函数给新对象增加属性和方法，最后返回新对象。</p></li></ol></li></ul><p>因此，student 最终接收到了创建好的对象。每次执行 new，都会创建一个新的对象。</p><h3 id="三-构造函数和普通函数的区别">（三）构造函数和普通函数的区别</h3><p>下面的构造函数，能够实现批量创建 Student 对象：</p><pre><code class="language-js">function Student(name, score) {
+    this.name = name;
+    this.score = score;
+}
+const student = new Student(&quot;Alice&quot;, 90);</code></pre><p>如果不使用构造函数，也可以使用如下方法（<strong>工厂函数</strong>）来批量创建 Student 对象：</p><pre><code class="language-js">function createStudent(name, score) {
+    return {
+        name: name,
+        score: score
+    };
+}
+const student = createStudent(&quot;Alice&quot;, 90);</code></pre><p>两种方法都可以，区别是工厂函数使用 return 显式返回新对象，而构造函数使用 new 表达式自动创建对象。</p><p>另外，构造函数本质上仍然是函数，并没有一种特殊的 function 语法。</p><h2 id="二-原型对象与原型链">二、原型对象与原型链</h2><h3 id="一-引入">（一）引入</h3><p>我们在构造函数中设计了这样的代码：</p><pre><code class="language-js">function Student(name, score) {
+    this.name = name;
+    this.score = score;
+    this.introduce = function() {
+        console.log(`我叫${this.name}，成绩是${this.score}`);
+    };
+}
+const student1 = new Student(&quot;Alice&quot;, 90);
+const student2 = new Student(&quot;Bob&quot;, 85);</code></pre><p>这里有一个问题：每一次 new Student 都会调用一次构造函数，因此每创建一个学生对象，就要创建一个 introduce() 函数。如果学生对象很多，就可能造成资源的浪费。</p><p>事实上，所有学生对象的 introduce() 函数都是相同的，因此它们完全可以共享一个函数。JS 的<strong>原型机制</strong>可以实现这一点。</p><h3 id="二-原型对象">（二）原型对象</h3><p>先看代码：</p><pre><code class="language-js">function Student(name, score) {
+    this.name = name;
+    this.score = score;
+}
+// 把 introduce 方法放到 Student 的 prototype 上
+Student.prototype.introduce = function() {
+    console.log(`我叫${this.name}，成绩是${this.score}`);
+};
+const student1 = new Student(&quot;Alice&quot;, 90);
+const student2 = new Student(&quot;Bob&quot;, 85);</code></pre><p>这里出现了一个新的东西：Student.prototype。它是构造函数 Student 的一个<strong>属性</strong>，其内容是一个对象。这个对象就是 Student 的<strong>原型对象</strong>。</p><p>什么是原型对象？原型对象可以理解为多个对象所共有的一块公共区域。上面的代码中，student1、student2 各自独立存储 name、score，同时共有原型对象上的属性和方法，因此它们共同拥有对一个函数的引用。由于这两个对象是从同一个构造函数通过 new 构造出来的，它们具有相同的原型对象。</p><p>这就是原型机制的一个重要用途：<strong>让多个对象共享属性和方法</strong>。</p><h3 id="三-原型链">（三）原型链</h3><p>在上面的示例中，通过 new Student 直接构造的对象并没有 introduce 方法，为什么仍然能够调用 student1.introduce() 呢？Student.prototype 本身并不属于 student1。</p><p>这是因为 JS 存在下面的查找机制：</p><ul><li><p>首先检查 student1 自己有没有 introduce 属性。</p></li><li><p>如果没有，就沿着它的原型链接，去原型对象（Student.prototype）上查找。</p></li><li><p>如果原型对象也没有，就继续向原型的原型查找。</p></li><li><p>一直查找到原型链末端 null，如果仍然没有，就得到 undefined。</p></li></ul><p>例如：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+Student.prototype.introduce = function() {
+    console.log(this.name);
+};
+const student = new Student(&quot;Alice&quot;);
+student.introduce(); // Alice
+</code></pre><p>查找机制如下：</p><pre><code class="language-js">student
+  |
+  │ 没有找到 introduce
+  ↓
+Student.prototype
+  |
+  │ 找到了 introduce
+  ↓
+调用该函数</code></pre><p>这种机制就是<strong>原型链机制</strong>。简单来说，就是先查找对象本身，再查找对象的原型对象，再查找原型对象的原型对象 ······ 查到最后还是没有，就得到 undefined。这个链条就是<strong>原型链</strong>。JavaScript 对象不只有自己的属性，还可以通过原型链接访问其他对象上的属性和方法。</p><p>从上面的例子可以发现：introduce 是原型对象上的方法，但 student.introduce() 调用后 this 仍然指向的是 student。这是因为 this 是由函数的调用方法决定的，这里调用者仍然是 student。</p><p>下面是另外一个实际的例子：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+const student = new Student(&quot;Alice&quot;);</code></pre><p>它的查找路径是：</p><pre><code class="language-js">student                 // 新对象
+   ↓
+Student.prototype       // 构造函数的原型对象（不是 Student ~ 函数）
+   ↓
+Object.prototype        // 对象的原型对象（不是 Object ~ 对象）
+   ↓
+null</code></pre><p>也就是说大部分的对象最后都有一个 Object 原型，使得它们可以调用 Object 原型的一些方法。（有的特殊对象没有，后面再说）</p><h3 id="四-原型属性和对象自己的属性">（四）原型属性和对象自己的属性</h3><h4 id="1-如何判断是不是原型属性">1、如何判断是不是原型属性</h4><p>如何判断一个对象的属性/方法是它自己的，还是它的原型链上的？答案是 Object.hasOwn() 方法。</p><p>我们之前提到过，可以使用 Object.hasOwn(对象, &quot;属性&quot;) 和 &quot;属性&quot; in 对象 这两种方法来确定对象是否拥有某个属性。实际上这两种方法是有差别的：</p><ul><li><p>Object.hasOwn() 只检查对象本身。</p></li><li><p>&quot;属性&quot; in 对象 会检查对象本身及<strong>对象的原型链</strong>。</p></li></ul><p>例如：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+
+Student.prototype.school = &quot;大学&quot;;
+
+const student1 = new Student(&quot;Alice&quot;);
+const student2 = new Student(&quot;Bob&quot;);
+
+console.log(Object.hasOwn(student1, &quot;school&quot;));      // false
+console.log(&quot;school&quot; in student1);                   // true</code></pre><p>school 属性是原型链上的，因此 in 方法的结果是 true，而 hasOwn 方法的结果是 false。</p><h4 id="2-区分原型属性和自身属性">2、区分原型属性和自身属性</h4><p>看下面的代码：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+Student.prototype.school = &quot;西电&quot;;
+const student1 = new Student(&quot;Alice&quot;);
+
+console.log(student1.school); // 西电
+
+student1.school = &quot;清华大学&quot;;
+console.log(student1.school); // 清华大学
+console.log(Student.prototype.school); // 西电</code></pre><p>这里出现了一个很重要的地方：构造函数 Student 是没有 school 的，因此最初 student1 没有 school，访问 student1.school 得到的是原型上的 “西电”。</p><p>但是向 student1.school 写入的时候就不一样了。JS 发现 student1 没有 school 属性时，不会去修改 student1 的原型的 school 属性，而是为 student1 增加 school 属性！之后再读取 student1.school 时，JS 会优先找到对象自己的属性，忽略原型上的相关属性，这种现象被称为<strong>属性遮蔽</strong>（Shadowing）。对于普通的可写数据来说，都是这样的。</p><h4 id="3-修改原型属性">3、修改原型属性</h4><p>JS 通过 new + 构造函数创建对象时，并不会将原型属性复制到每一个对象中（那样就不是原型属性了），而是使多个对象实例共有一个原型属性。</p><p>原型属性是通过例如 Student.prototype.school 的方法定义的，事实上这一方法也可以获得和改变原型属性。例如：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+Student.prototype.school = &quot;西电&quot;;            // 设置原型属性
+
+const student1 = new Student(&quot;Alice&quot;);
+console.log(student1.school); // 西电
+
+Student.prototype.school = &quot;清华大学&quot;;        // 改变原型属性
+console.log(student1.school); // 清华大学</code></pre><p>前面提到 Student.prototype 也是一种对象，所以也可以单独用 Object.hasOwn()、delete、Object.entries()、解构对象等语法操作其属性和方法，甚至重新赋值。例如，下面的写法是正确的：</p><pre><code class="language-js">Student.prototype = {
+    school: &quot;清华大学&quot;
+};</code></pre><h3 id="五-深入理解原型机制">（五）深入理解原型机制</h3><h4 id="1-查看原型">1、查看原型</h4><p>JS 提供了 Object.getPrototypeOf() 方法，用于查询某个对象的原型对象。例如：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+
+const student1 = new Student(&quot;Alice&quot;);
+console.log(Object.getPrototypeOf(student1) === Student.prototype);      // true</code></pre><p>注意区分：Student.prototype 是构造函数 Student 新建的对象的原型对象，而 student1.prototype 是 student1 对象自身名为 prototype 的属性，通常是 undefined。</p><h4 id="2-prototype-和-prototype-的区别">2、.prototype 和 [[Prototype]] 的区别</h4><p>这里要注意区分两个概念：构造函数的 .prototype 和新对象的 [[Prototype]]。</p><p>构造函数的 .prototype 是构造函数的属性（函数本质上也是一种 JS 对象，因此也具有属性），决定了在使用 new 表达式新建对象时，为新对象指定的原型对象是什么；而 [[Prototype]] 则是一个对象内部存储的对自己的”原型对象“的引用，是每个对象都具有的一个内部机制。Student.prototype 得到的是前者，而 Object.getPrototypeOf() 方法得到的是后者。这两者一些情况下相同，但并不一定相同，例如：</p><pre><code class="language-js">function Student(name) {
+  this.name = name;
+}
+Student.prototype.school = &quot;A&quot;;
+const student1 = new Student(&quot;Alice&quot;);
+Student.prototype = { school:&quot;B&quot; };
+const student2 = new Student(&quot;Bob&quot;);
+
+console.log(student1.school)         // A
+console.log(student2.school)         // B</code></pre><p>原先使用 new 定义 student1 时使用的是初始原型，因此 student1 的 [[Prototype]] 的 school 是 A。但后来重新指定了新的原型 { school:&quot;B&quot; }，构造函数的 prototype 属性从初始原型的<strong>引用</strong>变成了新原型的引用， 这时再用 new 定义 student2，student2 的 [[Prototype]] 就变成新原型了，其 school 变成 B。</p><p>所以，原型可以粗略地理解为：构造函数会将自己的原型属性 prototype 保存的原型对象的引用作为新对象的 [[Prototype]]。如果中途改变了 prototype，则此后新增的对象的原型对象也会随之改变，而之前的则不会改变。</p><h4 id="3-原型链的推广">3、原型链的推广</h4><p>在 JS 中，除了字符串、布尔值等原始值外，大部分符合数据结构都是对象。为了防止混淆，我们先把函数、对象、数组分别规定为 <strong>函数对象（可执行对象）、普通对象、数组对象</strong>。</p><p>先以对象为例。为什么新对象的原型对象，不是构造函数这一函数对象（语义上的“上级对象”），而是构造函数下属的一个 prototype 对象呢？</p><p>我们知道，多个普通对象所共有的原型函数，应当掌握这些对象所共同需要的一些属性和方法，层次是在这些对象内的。如果这些对象的原型对象被直接指定为其 “上级对象”，上级对象（构造函数）作为一个构造新对象的函数，其属性和方法和其创建的对象可能完全不同，因此把新对象的共有属性指定到它上面是不合适的，可能产生混乱和冲突。因此，我们在上级对象中专门约定一个 prototype 属性，用于存放其子函数的原型对象，它和子函数的属性是同一个层次的。</p><p>再来理解对象的原型链：</p><pre><code class="language-js">student =&gt; Student.prototype =&gt; Object.prototype =&gt; null</code></pre><p>Student.prototype 是普通对象，而普通对象语义上从属于 Object 类，因此其原型对象是 Object 从属的 Object.prototype。</p><p>然后是函数对象和数组对象的推广：</p><pre><code class="language-js">array1 =&gt; Array.prototype =&gt; Object.prototype =&gt; null
+function1 =&gt; Function.prototype =&gt; Object.prototype =&gt; null</code></pre><p>数组、函数，分别是 Array 类和 Function 类对象，因此其原型对象挂在 Array 和 Function 下。</p><p>构造函数也可以推广到数组和函数方面。例如，我们可以认为普通对象、数组、函数是 Object、Array 和 Function 函数创建的（但实际上只是语义等价，并不是真的调用了它们）。</p><p>总之，原型链可以这样理解：对象的原型对象存储在其构造函数上。array1 的构造函数是 Array，Array.prototype 的构造函数是 Object，而 Object.prototype 没有构造函数，因此为 null。</p><h2 id="三-js-中的方法">三、JS 中的方法</h2><p>我们现在已经学习了 <strong>原型链 </strong>这种重要的 JS 机制。在 JS 中，对象具有很重要的地位，函数、对象、数组等都属于 JS 对象，因此都具有原型链等作用机制。我们之前学习过的许多函数方法，都是基于原型链和对象方法机制来实现的，现在我们基于新知识再复习一次。</p><p>我们先列出两种常见的 JS 方法，再对它们进行归类。</p><pre><code class="language-js">// 第一种
+Object.keys(obj);
+// 第二种
+numbers.map(item =&gt; item * 2);
+</code></pre><h3 id="一-原型方法">（一）原型方法</h3><p>原型方法是定义在原型上的方法。当调用原型方法时，JS 会先检查对象自身有无相关同名方法，然后再顺着原型链找到原型方法，并且调用。</p><p>例如：</p><pre><code class="language-js">const numbers=[1];                                                            // 定义数组对象
+const student = {};           // 定义普通对象
+const test = function () { console.log(this) };                               // 定义函数对象
+
+numbers.map(item =&gt; item * 2);
+student.toString();
+test.call(student);</code></pre><p>它们分别调用的是以下三种原型的方法：</p><pre><code class="language-js">Array.prototype
+Object.prototype
+Function.prototype</code></pre><p>调用时，这些方法本身并不属于调用对象（如 number，student，test）的一部分，因而 JS 顺着原型链找到了它们的原型，并且进行了调用。这就是 <strong>原型方法</strong>。</p><h3 id="二-静态方法">（二）静态方法</h3><p>原型方法是定义在原型对象上的，而静态方法是直接定义在 <strong>构造函数 </strong>上的，它本身是构造函数的一个属性（方法），而不是构造函数的构造产物的方法。</p><p>Object.keys() 等就是常见的静态方法。例如：</p><pre><code class="language-js">const a = Object.keys(student);
+const b = Object.values(student);
+const c = Object.entries(student);</code></pre><p>它们都是构造函数 Object 的方法，而<strong>不是 Object.prototype 的方法</strong>，也不是构造函数的产物对象的方法。因此，不能使用下面的方法调用：</p><pre><code class="language-js">student.keys();
+student.values();
+student.entries();</code></pre><p>因为 student 并不具备这些方法，同时顺着原型链找不到 Object.prototype.keys() ······。</p><p>复习一下：Object.keys()、values()、entries() 并不遍历原型链，只遍历 “传入对象<strong>自身</strong>的可枚举字符串键”。</p><p>静态方法不一定只能由构造函数创建实例。它的关键是<strong>方法属于类或函数自身</strong>，而不是属于<strong>实例</strong>。例如 Object.keys() 就是一个静态方法。</p><h3 id="三-对象自身方法">（三）对象自身方法</h3><p>这个我们已经见过很多了，就是定义对象时定义给对象的方法，例如：</p><pre><code class="language-js">const student = {
+  greet: function () {
+    console.log(&#39;Hello!&#39;);
+  }
+};
+student.greet();</code></pre><p>这里的 student.greet() 即为对象自身方法。</p><h3 id="四-方法的延申调用">（四）方法的延申调用</h3><p>原型方法不一定非要通过原型链调用。例如，下面是一种原型调用：</p><pre><code class="language-js">numbers.map(item =&gt; item * 2);</code></pre><p>但它同样可以通过下面的方法调用：</p><pre><code class="language-js">Array.prototype.map.call(
+    numbers,
+    item =&gt; item * 2
+);</code></pre><p>因为 map 本身是一个函数。通过原型方法（属于<strong>对象方法</strong>）调用时，this 默认指定了 numbers；但也可以直接把原型函数写明，再使用 Function 的原型函数 call() 指定 this。</p><h2 id="四-复习-实例分析">四、复习（实例分析）</h2><pre><code class="language-js">const A = function () {};
+const B = function () {};
+const oldInstance = new A();
+A.prototype = B.prototype;
+const newInstance = new A();
+
+console.log({
+  oldInstanceOfA:oldInstance instanceof A,
+  newInstanceOfA:newInstance instanceof A,
+  oldConstructorIsA:oldInstance.constructor == A,
+  newConstructorIsB:newInstance.constructor == B
+});</code></pre><p>结果是：</p><pre><code class="language-json">{
+  &quot;oldInstanceOfA&quot;:false,
+  &quot;newInstanceOfA&quot;:true,
+  &quot;oldConstructorIsA&quot;:true,
+  &quot;newConstructorIsB&quot;:true
+}</code></pre><p>这里先从 prototype 角度出发，区分旧A、新A（=B）。</p><p>oldInstance 具有旧A prototype，故 oldInstance 的原型不再是新A，而 newInstance 是新 A；oldInstance 的 constructor 是旧A，指向构造函数A，而 newInstance 的 constructor 是新A来的，而新A=新B，故指向构造函数 B。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

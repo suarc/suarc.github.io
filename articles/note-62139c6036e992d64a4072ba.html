@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Linux 学习——第二章 用户与权限 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">Linux 学习——第二章 用户与权限</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84">一、用户与用户组</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F">二、权限系统</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%83%E9%99%90-rwx">（一）文件的权限 —— rwx</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E7%9B%AE%E5%BD%95%E7%9A%84%E6%9D%83%E9%99%90-%E4%B8%8D%E4%B8%80%E6%A0%B7%E7%9A%84-rwx">（二）目录的权限 —— 不一样的 rwx</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E6%95%B0%E5%AD%97%E6%9D%83%E9%99%90%E7%B3%BB%E7%BB%9F">（三）数字权限系统</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%9A%84%E7%AE%A1%E7%90%86-chmod-chown-sudo">三、文件权限的管理 —— chmod chown sudo</a>
+<a class="tab tabH3" href="#%E4%B8%80-chmod">（一）chmod</a>
+<a class="tab tabH3" href="#%E4%BA%8C-chown-%E5%92%8C-sudo">（二）chown 和 sudo</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-用户与用户组">一、用户与用户组</h2><p>Linux 操作系统是多用户操作系统，允许创建多个用户，并且为不同用户分配不同的操作权限。</p><p>每个用户都有一个name和一个id（UID），可以用whoami查询name，用id查询UID。</p><p>为了方便管理权限，Linux 还有用户组的概念。可以把多个用户加入同一个用户组（一个用户也可以加入多个用户组），再为用户组设定权限，这样就能决定用户在访问文件时适用哪一组权限。用户组也具有ID，被称为GID。</p><pre><code class="language-bash">whoami       # 用户名
+id           # 用户的UID GID
+groups       # 用户的用户组</code></pre><p>在 Linux 中，root 是一个特殊的超级用户，通常拥有非常广泛的系统管理权限。如果root账户操作不当，可能导致一些问题，因此不建议什么事情都使用root账户。</p><h2 id="二-权限系统">二、权限系统</h2><h3 id="一-文件的权限-rwx">（一）文件的权限 —— rwx</h3><p>当输入 ls -l 时，可以看见文件的非常详细的信息：</p><pre><code class="language-bash">asd@asd-VMware-Virtual-Platform:~/linux-practice/class3$ ls -l
+-rw-rw-r-- 1 asd asd 29 10月 28 18:28 hello.txt</code></pre><p>最前面的“-rw-rw-r--”，就是文件的权限。（中间的 asd asd，第一个是文件所有者的用户名，第二个是文件所属组的组名。）</p><p>第一个字符表示文件的类型（我们之前已经学习过了）。其他字符的含义如下：</p><ul><li><p>第2~4个字符表示<strong>所有者</strong>权限</p></li><li><p>第 5–7 个表示<strong>所属组</strong>权限</p></li><li><p>第 8–10 个表示<strong>其他用户</strong>权限</p></li></ul><p>可以观察到，每处权限都是三个字符，并且三个字符是由 r、w、x、-构成的，它们的含义如下：</p><ul><li><p>r：<strong>读取</strong>权限（read）。</p></li><li><p>w：<strong>写入</strong>权限（write）。</p></li><li><p>x：<strong>执行</strong>权限（execute）。</p></li><li><p>-：对应位置没有该项权限。</p></li></ul><p>例如，-rw-rw-r--代表 hello.txt 是一个普通文件，所有者、所属组都具有RW权限（读写），而其他用户则只有读取权限。</p><p>什么是其他用户权限：如果你不是这个文件的所有者，也不在这个文件的所属组里，那么你就是其他用户。</p><h3 id="二-目录的权限-不一样的-rwx">（二）目录的权限 —— 不一样的 rwx</h3><pre><code class="language-bash">asd@asd-VMware-Virtual-Platform:~/linux-practice$ ls -l
+drwxrwxr-x 2 asd asd 4096 10月 28 18:28 class3</code></pre><p>目录的权限和文件的权限在其他机制上类似，但目录的 rwx 具有不同的意思：</p><ul><li><p>r：<strong>读取</strong>目录（read）。列出当前目录中各种文件和子目录的名称。</p></li><li><p>w：<strong>修改</strong>目录（write）。创建、删除或重命名目录<strong>中</strong>的条目（不包括目录本身）。</p></li><li><p>x：<strong>访问</strong>目录（execute）。搜索或穿透目录，按路径访问目录中条目的权限。</p></li></ul><p>r和x的区别是：有x无r时，你不能列出目录中的条目，但如果你知道目录中内容的确切文件名，你仍然可以找到它。有r无x时，你可以列出目录中的条目，但不能找到它（cd进去、读其中文件并ls -l查看详细信息等）。（找到它后能不能进行修改，还要看该文件自身的权限设置。）</p><p>由于删除文件会改变目录，因此删除文件<strong>需要该文件所在文件夹的w权限</strong>；如果只有该文件的w权限，则可以修改但不能删除文件。（当然，还需要目录的x权限。）</p><h3 id="三-数字权限系统">（三）数字权限系统</h3><p>除了 u+x 这样的符号写法，Linux 还经常用数字表示权限。三个基本权限分别对应以下数值：r~4，w~2，x~1。将数字相加，就能得到一组三位权限的数值：</p><ul><li><p>7 —— rwx 读取、写入、执行</p></li><li><p>6 —— rw- 读取、写入</p></li><li><p>5 —— r-x 读取、执行</p></li><li><p>4 —— r-- 仅读取</p></li><li><p>0 —— --- 没有权限</p></li></ul><h2 id="三-文件权限的管理-chmod-chown-sudo">三、文件权限的管理 —— chmod chown sudo</h2><h3 id="一-chmod">（一）chmod</h3><p>chmod 命令可以修改文件/目录的权限。chmod的基本语法如下：</p><pre><code class="language-bash">chmod 范围+-=权限符号 文件名
+chmod u+x,g=r hello.sh</code></pre><p>范围可选 u、g、o、a，分别是 所有者（user）、所属组（group）、其他用户（others）、全部（all）；+-意味着增加/减少权限，而=意味着直接设定权限；权限符号就是我们的 rwx 符号。例如，chmod u+x,g=r hello.sh 意味着将 hello.sh 的所有者权限增加一项 x（执行），而所属组权限改为只读（r--）。</p><blockquote><p>chmod 是 change mode 的缩写。</p></blockquote><p>能够调用 chmod 的人是文件的所有者，或者 root 账户/已经通过 sudo 取得 root 执行权限的账户。</p><p>当然，也可以使用“chmod 数字 文件”的方法来更改权限，数字的顺序就是 u-g-o 的顺序。例如下面的命令能够实现所有者 rwx，而所属组用户、其他用户完全没有权限。</p><pre><code class="language-bash">chmod 700 hello.sh</code></pre><h3 id="二-chown-和-sudo">（二）chown 和 sudo</h3><p>chown 是 change owner 的缩写，用来修改文件的所有者和所属组，这里暂时不详细介绍。</p><pre><code class="language-bash">sudo chown webadmin:webteam example.conf      # 将example.conf的所有者改为webadmin,所属组改成webteam</code></pre><p>sudo 是临时提升命令权限的方法。一些操作需要 root 权限才能执行，但直接长期使用 root 账户执行各种操作又不安全，因此推荐使用 sudo 命令，平常使用低权限的普通用户操作，而只有需要 root 权限的操作临时使用 sudo 提权。</p><pre><code class="language-bash">sudo 需要执行的命令</code></pre><p>这条命令会要求用户通过自己的密码验证自己的身份，然后临时以 root 权限运行该命令。除了以 root 权限运行外，还能通过设置 -u 参数，使用 sudo 以其他用户的身份执行操作。</p><p>在 Ubuntu 的常见默认配置下，如果需要进行身份验证，通常输入当前用户自己的密码。注意：sudo 不会永久改变当前用户身份，也不保证每次调用都要求输入密码。只有获得相应授权的用户，才能通过 sudo 执行被允许的提权操作。</p><p>能不用 sudo 执行的操作就不要用 sudo，而是用普通用户权限。这一方面是从安全出发考虑，另一方面，如果一个文件使用 root 权限创建，这个文件的所有者可能就归 root 了，会给后面带来不必要的麻烦。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

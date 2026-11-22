@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Linux 学习——第三章 软件包的安装和管理 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">Linux 学习——第三章 软件包的安装和管理</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">一、软件包管理器</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E7%B4%A2%E5%BC%95-apt-update">（一）索引 —— apt update</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E6%9F%A5%E8%AF%A2-apt-search-show">（二）查询 —— apt search/show</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%AE%89%E8%A3%85-apt-install">（三）安装 —— apt install</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E5%8D%87%E7%BA%A7-apt-upgrade">（四）升级 —— apt upgrade</a>
+<a class="tab tabH3" href="#%E4%BA%94-%E5%8D%B8%E8%BD%BD-apt-remove">（五）卸载 —— apt remove</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-软件包管理器">一、软件包管理器</h2><p>Linux 操作系统中，软件包管理器可以查找、安装、更新和卸载软件，还能处理软件之间的依赖关系。</p><p>不同 Linux 发行版有不同的包管理器，Ubuntu 常用的软件包管理工具是 apt。</p><p>由于安装软件涉及到系统权限的操作，因此需要使用 sudo 命令临时提权为 root。</p><h3 id="一-索引-apt-update">（一）索引 —— apt update</h3><p>联网从已配置的软件源获取最新的软件包信息（索引）。软件包索引可以帮助系统了解软件包的列表、版本、下载地址。</p><pre><code class="language-bash">asd@asd-VMware-Virtual-Platform:~$ sudo apt update
+[sudo] asd 的密码：
+获取:1 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+······
+获取:33 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.1 kB]
+已下载 12.3 MB，耗时 21秒 (584 kB/s)
+正在读取软件包列表... 完成
+正在分析软件包的依赖关系树... 完成
+正在读取状态信息... 完成
+有 345 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</code></pre><p>在安装软件前，一般需要先更新索引信息。</p><h3 id="二-查询-apt-search-show">（二）查询 —— apt search/show</h3><p>使用 apt search 软件包名 可以在软件包中搜索软件。找到目标软件后，可以用 apt show 来查看软件的详细信息。</p><pre><code class="language-bash">sudo apt search gcc
+sudo apt show gcc</code></pre><h3 id="三-安装-apt-install">（三）安装 —— apt install</h3><p>确定需要的软件包后，可以输入 apt install 软件包名 来自动安装软件包。</p><pre><code class="language-bash">sudo apt install gcc</code></pre><h3 id="四-升级-apt-upgrade">（四）升级 —— apt upgrade</h3><p>可以使用 apt upgrade 来升级系统中可以升级的软件包。注意 apt upgrade 会一次性升级系统中多个可以升级的软件。</p><pre><code class="language-bash">sudo apt upgrade</code></pre><h3 id="五-卸载-apt-remove">（五）卸载 —— apt remove</h3><p>如果不再需要一个软件，可以执行 apt remove 软件包 命令，将软件卸载。</p><pre><code class="language-bash">sudo apt remove 包名</code></pre>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

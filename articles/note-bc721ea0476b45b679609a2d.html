@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Linux 学习——第五章 服务与 systemd · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">Linux 学习——第五章 服务与 systemd</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E6%9C%8D%E5%8A%A1">一、服务</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%8D%E5%8A%A1">（一）什么是服务</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1">（二）如何管理服务</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E6%9F%A5%E7%9C%8B%E5%92%8C%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1">二、查看和管理服务</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1">（一）查看服务</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95">1、基础用法</a>
+<a class="tab tabH4" href="#2-%E6%8B%93%E5%B1%95%E5%8F%82%E6%95%B0">2、拓展参数</a>
+<a class="tab tabH4" href="#3-%E6%9F%A5%E7%9C%8B%E5%85%B7%E4%BD%93%E6%9C%8D%E5%8A%A1">3、查看具体服务</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1">（二）管理服务</a>
+<a class="tab tabH4" href="#1-%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2-%E9%87%8D%E5%90%AF">1、启动、停止、重启</a>
+<a class="tab tabH4" href="#2-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8">2、开机自启动</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E5%88%A4%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%A4%B1%E8%B4%A5%E5%8E%9F%E5%9B%A0">三、判断服务失败原因</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-服务">一、服务</h2><h3 id="一-什么是服务">（一）什么是服务</h3><p>以 Nginx 网络服务为例，下面是程序、进程、服务三个概念的分辨：</p><div class="md-table"><table><thead><tr><th style="text-align:center">概念</th><th style="text-align:center">含义</th><th style="text-align:center">例子</th></tr></thead><tbody><tr><td style="text-align:center">程序</td><td style="text-align:center">磁盘上的程序代码或可执行文件</td><td style="text-align:center">Nginx 程序文件</td></tr><tr><td style="text-align:center">进程</td><td style="text-align:center">程序运行时，操作系统管理的运行实例（运行中的程序）</td><td style="text-align:center">正在运行的 Nginx 进程</td></tr><tr><td style="text-align:center">服务</td><td style="text-align:center">按一定方式持续提供功能、需要被管理的系统组件或应用</td><td style="text-align:center">Web 服务、SSH 服务</td></tr></tbody></table></div><p>程序是运行的基础，进程是运行的实例，服务强调 <strong>持续提供 </strong>的功能和管理方式。如果我们需要运营一个 Nginx http 服务器，需要长期、持续地运行 Nginx 程序，则可以将 Nginx 升级为一个服务，使之由系统管理、按一定方式持续提供功能。</p><p>三者不是严格的一一对应关系，一个服务可能涉及多个进程，一个进程也不一定属于系统服务。</p><h3 id="二-如何管理服务">（二）如何管理服务</h3><p>Ubuntu 24.04 使用 systemd（System Daemon，系统进程）作为服务管理的主要工具。负责与 systemd 交互的常用命令是 systemctl（System Control，系统控制）。</p><p>先可以大概做出如下的划分：</p><ul><li><p>systemd：负责管理系统启动、服务以及其他系统单元的 <strong>管理程序</strong>。</p></li><li><p>systemctl：你在命令行中使用的管理工具，可操作 systemd。</p></li><li><p>service：你要管理的某个具体服务，例如 SSH 服务或 Web 服务。</p></li></ul><p>大致流程如下：管理命令 ==&gt; systemctl =&gt; systemd。</p><h2 id="二-查看和管理服务">二、查看和管理服务</h2><h3 id="一-查看服务">（一）查看服务</h3><h4 id="1-基础用法">1、基础用法</h4><p>可以使用 systemctl status 命令查询现有服务。如果要查看启动失败的服务，可以输入 --failed 参数。</p><pre><code class="language-bash">systemctl status
+systemctl --failed</code></pre><p>输入该命令后，信息会独占整个终端界面。按下 q（Quit）以退出。</p><pre><code class="language-bash">DESKTOP-NBI1N2K
+    State: running
+    Units: 360 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Thu 2026-11-05 14:36:26 CST; 5min ago
+  systemd: 255.4-1ubuntu8.17
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init
+           ├─non-systemd
+           │ ├─319 /init
+           │ ├─320 /init
+           │ ├─321 -bash
+           │ ├─521 systemctl status
+           │ └─522 less
+           ├─system.slice
+           │ ├─cron.service
+           │ │ └─177 /usr/sbin/cron -f -P
+           │ ├─dbus.service
+           │ │ └─178 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+············</code></pre><h4 id="2-拓展参数">2、拓展参数</h4><p>直接使用 systemctl 看到的是树状的所有服务的信息。下面的命令可以以指定方案查看指定的服务：</p><pre><code class="language-text">systemctl list-units --type=service --state=running</code></pre><p>输出如下：</p><pre><code class="language-text">  UNIT                        LOAD   ACTIVE SUB     DESCRIPTION
+  cron.service                loaded active running Regular background program processing daemon
+  dbus.service                loaded active running D-Bus System Message Bus
+  getty@tty1.service          loaded active running Getty on tty1
+  rsyslog.service             loaded active running System Logging Service
+  systemd-journald.service    loaded active running Journal Service
+  systemd-logind.service      loaded active running User Login Management
+  systemd-resolved.service    loaded active running Network Name Resolution
+  systemd-timesyncd.service   loaded active running Network Time Synchronization
+  systemd-udevd.service       loaded active running Rule-based Manager for Device Events and Files
+  unattended-upgrades.service loaded active running Unattended Upgrades Shutdown
+  user@1000.service           loaded active running User Manager for UID 1000
+  wsl-pro.service             loaded active running Bridge to Ubuntu Pro agent on Windows
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+12 loaded units listed.</code></pre><p>先看这个指令的开关：</p><p>1、list-units：使用 systemctl 列出单元。</p><p>2、--type=service：只查看服务类型。systemctl 管理的不仅是服务，还有其他类型的单元，例如挂载点、定时器和套接字，因此这里需要指定。 </p><p>3、--state=running：只查看正在运行的服务。</p><p>再重点关注三个字段：</p><div class="md-table"><table><thead><tr><th style="text-align:center">字段</th><th style="text-align:center">含义</th></tr></thead><tbody><tr><td style="text-align:center">UNIT</td><td style="text-align:center">单元名称</td></tr><tr><td style="text-align:center">LOAD</td><td style="text-align:center">单元定义是否已加载</td></tr><tr><td style="text-align:center">ACTIVE</td><td style="text-align:center">单元的总体活动状态</td></tr></tbody></table></div><h4 id="3-查看具体服务">3、查看具体服务</h4><p>找到需要查看的服务的 UNIT 名字后（这里是 cron.service），可以使用下面的命令，进一步查看该服务的详细信息：</p><pre><code class="language-bash">systemctl status cron.service</code></pre><p>结果如下：</p><pre><code class="language-bash">● cron.service - Regular background program processing daemon
+     Loaded: loaded (/usr/lib/systemd/system/cron.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2026-11-05 14:36:27 CST; 15min ago
+       Docs: man:cron(8)
+   Main PID: 177 (cron)
+      Tasks: 1 (limit: 4639)
+     Memory: 560.0K (peak: 1.5M)
+        CPU: 23ms
+     CGroup: /system.slice/cron.service
+             └─177 /usr/sbin/cron -f -P</code></pre><p>从中我们可以得到如下信息：</p><ul><li><p>服务当前是否处于活动状态（上面是 active）；</p></li><li><p>服务最近的启动信息；</p></li><li><p>相关进程的 PID（上面是177）</p></li><li><p>部分近期日志。</p></li></ul><p>注意：active 并不意味着服务 running。一些一次性任务执行完后可能显示 active (exited)，它们的工作已经完成，不一定意味着存在一个持续运行的进程。</p><h3 id="二-管理服务">（二）管理服务</h3><h4 id="1-启动-停止-重启">1、启动、停止、重启</h4><p>以服务 example.service 为例：</p><pre><code class="language-bash">sudo systemctl start example.service
+sudo systemctl stop example.service
+sudo systemctl restart example.service</code></pre><p>以上三个命令，分别是启动服务、停止服务、重启服务。</p><p>服务器启动/停止涉及到系统方面的影响，因此需要使用 sudo 命令临时提权 root。</p><h4 id="2-开机自启动">2、开机自启动</h4><p>可以使用 enable 和 disable 参数来设置服务的开机自启动。例如：</p><pre><code class="language-bash">sudo systemctl enable nginx.service
+sudo systemctl disable nginx.service</code></pre><p>这两个命令分别开启/关闭了 nginx 服务的开机自启动。</p><p>注意：这两个命令只设置了是否开机自启动，并不会立即启动/关闭服务。如果需要立即生效，则可以使用 --now 参数。例如：</p><pre><code class="language-bash">sudo systemctl enable --now nginx.service</code></pre><h2 id="三-判断服务失败原因">三、判断服务失败原因</h2><p>如果服务无法启动，则单纯的 systemctl start 并不能解决问题，这时就要定位服务的日志。</p><p>可以先使用 systemctl status 查看服务的状态，再使用命令 journalctl（Journal Control）查询服务的日志：</p><pre><code class="language-bash">journalctl -u 服务名.service</code></pre><p>-u 意味着使用服务的单元名来查询。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

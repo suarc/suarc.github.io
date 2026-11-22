@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CSS Grid布局方法学习 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">CSS Grid布局方法学习</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E7%88%B6%E5%85%83%E7%B4%A0%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7">一、父元素基础属性</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E5%AD%90%E5%85%83%E7%B4%A0%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7">二、子元素基础属性</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-父元素基础属性">一、父元素基础属性</h2><pre><code class="language-css">display:grid;</code></pre><p><strong>（一）基础属性</strong></p><p>这部分和flexbox很像，不用单独学习。</p><ul><li><p>grid-template-rows、grid-template-columns规定行列数及其宽度。</p></li><li><p>grid-auto-flow规定了内容自动排列的方向，有点类似flex-direction（但实际上并不同）。row、column对应行、列。</p></li><li><p>justify/align-content/items规定了内容的布局方式。在GridBox中，justify始终对应横轴，而align始终对应纵轴。</p></li><li><p>gap控制间距，row-gap和column-gap可以控制不同方向上的间距。gap可以简写：</p></li></ul><pre><code class="language-css">gap: 行间距 列间距</code></pre><p><strong>（二）定义基准行列</strong></p><p>单位：fr规定按比例分配，也可直接写px。</p><pre><code class="language-css">grid-template-rows:1fr 200px 200px;
+grid-template-columns:50px 50px 50px;</code></pre><p>这样规定了3行3列，第2、3行固定200px，第1行按比例“1”分空间。由于只有第1行按比例分空间，因此第1行分剩下的全部空间。</p><p>过多行列则采用repeat语法：</p><pre><code class="language-css">grid-template-rows:repeat(3,1fr) repeat(2,100px);</code></pre><p>这意味着一共5行，前3行等分剩余空间，而4~5行固定100px。</p><p>repeat语法允许auto-fit，即自动决定repeat几次（这实际上是根据剩余空间来决定行/列数）。例如：</p><pre><code class="language-css">grid-template-rows:repeat(auto-fit,100px);</code></pre><p>此外grid布局还支持minmax语法，规定了行/列的最低/高。例如：</p><pre><code class="language-css">grid-template-rows:repeat(2,minmax(200px,1fr));</code></pre><p>这规定了2行，并且每行的最低高度是200px，最高高度是按1fr分配。</p><p><strong>（三）按区域划分</strong></p><p>允许事先定义grid的area，再使用grid-area来划定行列区域。这样在某些情况下会比较直观。</p><pre><code class="language-css">grid-template-areas:
+  &quot;header header&quot;
+  &quot;sidebar main&quot;
+  &quot;footer footer&quot;;</code></pre><p>这样事实上规定了一个3行2列Grid结构。子元素要引用区域时，可使用grid-area: header。（空单元格使用“.”占位）</p><p>注意：这种方法实际上是跨行/列结构。所以如果在HTML中输入了多个含sidebar和main的div，它们会重叠在同样的行列中。</p><p>如果在CSS中同时定义了多个相同area，如下所示：</p><pre><code class="language-css">grid-template-areas:
+  &quot;header header&quot;
+  &quot;sidebar main&quot;
+  &quot;sidebar main&quot;
+  &quot;footer footer&quot;;</code></pre><p>这实际上规定了sidebar是一个横跨第二行和第三行的grid结构，而不是同时存在两个为sidebar的div。</p><p><strong>（四）隐式行列</strong></p><p>当元素超出模板时，可通过设置隐式行列，规定子元素超出模板时自动为其生成的新行列的参数。</p><pre><code class="language-css">grid-auto-rows: 100px;
+grid-auto-columns: 100px;</code></pre><h2 id="二-子元素基础属性">二、子元素基础属性</h2><p>除了align-self和justify-self外，子元素还有一个重要属性是跨行（row）和跨列（column）。</p><p><strong>（一）横跨行列</strong></p><p>先定义行/列线：它们是Grid二维布局的分隔线。例如，一个两行、三列表格结构，则有3条行线、4条纵线（要算上两侧和中间）。一般状态下，行线/纵线的起点是上侧/左侧，终点反之。</p><p>下面是另外一个示例：</p><pre><code class="language-css">grid-row:2/5;
+grid-column:2/4;</code></pre><p>grid-row:2/5规定了这个表格在行方向中，从第2条<strong>行线</strong>开始，到第5条行线结束，横跨3行。</p><p>这里使用的是正数，指的是从行起点开始的第1条线~第3条线。如果使用负数，如-3/-1，则是从行终点开始倒数的第3条线~第1条线。</p><p>当然，还有span写法：</p><pre><code class="language-css">grid-row:span 2;
+grid-column:span 3;</code></pre><p>这实际上规定了从此grid子元素的基准格出发，向横/纵向占据几格。例如，row:span 2规定了纵向占2格。span必须是正整数。</p><p>span写法直观，但行列线写法也有优点，例如：</p><pre><code class="language-css">  grid-row: 1 / -1;
+  grid-column: 1 / -1;</code></pre><p>这样可以快速占满行/列。</p><p><strong>（二）GRID-AREA</strong></p><p>grid-area除了划定区域外，还可以当作grid-column和grid-row的合并写法。具体写法是：</p><pre><code class="language-css">grid-area: 行起点 / 列起点 / 行终点 / 列终点;
+grid-area: 1 / 2 / 3 / 4;</code></pre><p>使用负数时的效果与grid-column和grid-row相同。对于初学者来说，目前只建议掌握把四种属性全部写全的写法。</p><p><strong>（三）其他</strong></p><p>另外：position:sticky和top:0可以帮助首行保持固定在顶部。</p><p>Grid 项目默认有类似 min-width: auto 的行为，内容可能把 1fr 撑开，导致溢出。常见解决：minmax(0, 1fr) 或给项目 min-width: 0;。这是实际写响应式 Grid 很容易踩的坑。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

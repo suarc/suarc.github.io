@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第七章 面向对象编程进阶 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第七章 面向对象编程进阶</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">一、对象的属性描述</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">（一）属性描述</a>
+<a class="tab tabH4" href="#1-writable-%E5%8F%AF%E5%86%99%E5%B1%9E%E6%80%A7">1、writable 可写属性</a>
+<a class="tab tabH4" href="#2-enumerable-%E5%8F%AF%E8%A2%AB%E6%9E%9A%E4%B8%BE">2、enumerable 可被枚举</a>
+<a class="tab tabH4" href="#3-configurable-%E5%8F%AF%E8%A2%AB%E9%85%8D%E7%BD%AE">3、configurable 可被配置</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E8%AE%BE%E7%BD%AE%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">（二）设置属性描述</a>
+<a class="tab tabH4" href="#1-%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F%E5%88%9B%E5%BB%BA%E7%9A%84%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">1、对象字面量创建的属性描述</a>
+<a class="tab tabH4" href="#2-%E6%89%8B%E5%8A%A8%E8%AE%BE%E7%BD%AE%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">2、手动设置属性描述</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E7%9A%84-constructor-%E5%B1%9E%E6%80%A7">二、原型对象的 constructor 属性</a>
+<a class="tab tabH3" href="#%E4%B8%80-constructor-%E5%B1%9E%E6%80%A7">（一）constructor 属性</a>
+<a class="tab tabH3" href="#%E4%BA%8C-constructor-%E7%9A%84%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0">（二）constructor 的属性描述</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF%E6%9C%BA%E5%88%B6">三、原型继承机制</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E6%9B%B4%E6%94%B9">（一）原型链的更改</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF">（二）实现原型继承</a>
+<a class="tab tabH2" href="#%E5%9B%9B-%E5%80%9F%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">四、借用构造函数</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%A6%82%E4%BD%95%E5%80%9F%E7%94%A8">（一）如何借用</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%80%9F%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E5%8C%BA%E5%88%AB">（二）“借用构造函数” 和原型链的区别</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-对象的属性描述">一、对象的属性描述</h2><h3 id="一-属性描述">（一）属性描述</h3><p>除了属性名、属性内容外，JS 对象还具有 <strong>属性描述</strong>，规定了属性是否可被修改、可被枚举、可被删除或重新配置。</p><p>属性描述的获取方法是 Object.getOwnPropertyDescriptor(对象,属性名)。例如：</p><pre><code class="language-js">Object.getOwnPropertyDescriptor(a,&quot;name&quot;);</code></pre><p>例如：</p><pre><code class="language-js">const a = {
+  name:&quot;Alice&quot;
+};
+console.log(
+    Object.getOwnPropertyDescriptor(a,&quot;name&quot;)
+);</code></pre><p>得到的结果是这样的：</p><pre><code class="language-json">{
+  &quot;value&quot;:&quot;Alice&quot;,
+  &quot;writable&quot;:true,
+  &quot;enumerable&quot;:true,
+  &quot;configurable&quot;:true
+}</code></pre><p>这里有四个属性：value、writable、enumerable、configurable。value 不用再说了，关键是剩下的三个：</p><h4 id="1-writable-可写属性">1、writable 可写属性</h4><p>此选项规定此属性的内容是否可被更改。</p><h4 id="2-enumerable-可被枚举">2、enumerable 可被枚举</h4><p>此选项规定此属性能否被枚举。</p><p>我们之前曾提到过，可以用 for in、提取对象为数组的枚举方法（Object.keys()等）、展开运算符（...）等方法来枚举对象的内容。enumerable 为 false 的属性不会出现在这些普通枚举方法的结果中。</p><p>已知 Object.prototype 的内置属性都是不可被枚举的。下面就是一个例子：</p><pre><code class="language-js">console.log(Object.prototype.constructor);            // Object
+const newarr = Object.entries(Object.prototype);
+console.log(newarr);                                  // []</code></pre><h4 id="3-configurable-可被配置">3、configurable 可被配置</h4><p>此选项规定了属性能否被删除、其描述能否被更改。如果 configurable 为 false，则 enumerable 将不能再更改，writable 只能从 true 单向改为 false，且无法删除属性。value 仍然由 writable 管理，writable 为 true 时仍然可以改 value。</p><p>注意：此属性的修改是<strong>无法复原</strong>的，因为 configurable: false 同样会阻止 JS 修改 configurable 属性，导致它不能被改回 true。</p><h3 id="二-设置属性描述">（二）设置属性描述</h3><h4 id="1-对象字面量创建的属性描述">1、对象字面量创建的属性描述</h4><p>通过对象字面量创建的对象默认是三个属性全部 true 的。例如：</p><pre><code class="language-js">Student.prototype = {
+    constructor: Student,
+    age: 20
+};
+console.log(Object.keys(Student.prototype));
+Object.getOwnPropertyDescriptor(Student.prototype,&quot;age&quot;);</code></pre><p>输出结果分别是：</p><pre><code class="language-js">[&quot;constructor&quot;, &quot;age&quot;]
+{
+  &quot;value&quot;:20,
+  &quot;writable&quot;:true,
+  &quot;enumerable&quot;:true,
+  &quot;configurable&quot;:true
+}</code></pre><h4 id="2-手动设置属性描述">2、手动设置属性描述</h4><p>如果我们想设置属性描述，可以使用 Object.defineProperty(对象，属性，属性描述) 的方法。例如：</p><pre><code class="language-js">Object.defineProperty(Student.prototype, &quot;constructor&quot;, {
+    value: Student,
+    writable: true,
+    configurable: true
+});</code></pre><p>没有写到的部分则采用现有值。如果用此方法创建新属性（不是修改现有属性），则没写到的部分通常默认为 false。</p><h2 id="二-原型对象的-constructor-属性">二、原型对象的 constructor 属性</h2><h3 id="一-constructor-属性">（一）constructor 属性</h3><p>当普通函数作为构造函数时，其一般会获得 prototype 这一原型属性。prototype 本身是一个原型对象，它一般有一个 constructor 属性，默认指向<strong>这个构造函数</strong>。例如：</p><pre><code class="language-js">function Teacher(name) {
+  this.name = name;
+}
+const teacher1 = new Teacher(&quot;Alice&quot;);
+console.log(teacher1.constructor);        // Teacher</code></pre><p>teacher1 对象不具有 constructor 属性，因此到 Teacher.prototype 中寻找，然后从 Teacher.prototype.constructor 得到了 Teacher 函数。</p><p>例如：</p><pre><code class="language-js">function Student(name) {
+    this.name = name;
+}
+const student = new Student(&quot;Alice&quot;);
+// 通过 student.constructor 找到 Student
+const student2 = new student.constructor(&quot;Bob&quot;);
+console.log(student2.name); // Bob</code></pre><p>注意：constructor 并不是 JavaScript 专门为构造函数设计的特殊语法，也不是一种内部机制，而只是一个默认存在的普通属性。它是<strong>可以被任意更改</strong>的，只是<strong>默认指向它的构造函数</strong>。（如果 constructor 不存在，会在原型链上继续寻找 constructor，并且往往得到 Object.prototype.constructor，值是 Object。）</p><p>constructor 的存在为原型对象提供了一个 “构造它的构造函数” 的语义属性，可以用它为新对象分类（如 Student，Teacher 等），但由于它可被修改，因此不能绝对地将它用于判断对象的真实类型或创建来源。</p><h3 id="二-constructor-的属性描述">（二）constructor 的属性描述</h3><p>使用 Object.getOwnPropertyDescriptor(Object.prototype,&quot;constructor&quot;) 可得到如下内容：</p><pre><code class="language-js">{
+    value: Object,
+    writable: true,
+    enumerable: false,
+    configurable: true
+}</code></pre><p>这说明 constructor 是一个可写、不可被枚举、可被配置的属性。</p><h2 id="三-原型继承机制">三、原型继承机制</h2><h3 id="一-原型链的更改">（一）原型链的更改</h3><p>先看下面的代码：</p><pre><code class="language-js">function Animal(name)      // 动物构造函数
+{
+  this.name = name;
+}
+Animal.prototype.eat = function () { console.log(`${this.name} 正在吃东西`); };
+
+function Dog(name)          // 狗的构造函数
+{
+  this.name = name;
+}
+Dog.prototype.bark = function () { console.log(`${this.name} 正在汪汪叫`); };
+
+const a = new Dog(&#39;Bob&#39;);</code></pre><p>我们这里新建了 Animal、Dog 这两个原型函数。显然狗属于动物，因此我们自然地想到 Dog 可以继承 Animal 的方法，从而使对象 a 同时具有 Dog 的自身方法 bark() 和 Animal 的公共方法 eat()。但是，这里是行不通的，因为 a 的原型链是这样的：</p><pre><code class="language-js">a =&gt; Dog.prototype =&gt; Object.prototype =&gt; null</code></pre><p>这里的原型链是默认的。如果我们想要实现上述功能，就需要在 Dog.prototype 后面加上 Animal.prototype，使原型链变成这样：</p><pre><code class="language-js">a =&gt; Dog.prototype =&gt; Animal.prototype =&gt; Object.prototype =&gt; null</code></pre><p>这就涉及到了原型链的更改。</p><h3 id="二-实现原型继承">（二）实现原型继承</h3><p>如何更改原型链？或者说，应当如何指定某个对象的原型对象？答案是使用 Object.create() 方法。</p><p>Object.create() 方法会创建一个新对象，并且将其原型指向一个现有对象。例如：</p><pre><code class="language-js">const obj1 = Object.create(obj2);             //  创建了对象 a，其内容是 {}，并且其 [[prototype]] 指向对象 b</code></pre><p>这就是 <strong>原型继承</strong>。</p><p>回到我们上面的示例，我们再加一行：</p><pre><code class="language-js">Dog.prototype = Object.create(Animal.prototype);      // 新建一个 [[prototype]] =&gt; Animal.prototype 的空对象，并且将其赋给 Dog.prototype</code></pre><p>这样，就使 Dog.prototype 的原型对象指向了 Animal.prototype。不过要注意的是，由于 Object.create() 是新建没有自身属性的新对象，因此 Dog.prototype 的原有内容（如 constructor）会被清空。</p><p>完整代码如下：</p><pre><code class="language-js">function Animal(name) {  this.name = name;  }
+function Dog(name) {  this.name = name;  }
+
+Animal.prototype.eat = function () { console.log(`${this.name} 正在吃东西`); };
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.bark = function () { console.log(`${this.name} 正在汪汪叫`); };
+
+const a = new Dog(&#39;Bob&#39;);
+a.bark();         // 正在汪汪叫
+a.eat();          // 正在吃东西</code></pre><p>这里有一个细节，定义 bark 方法必须放在 Object.create 语句的后面，否则会被新建的空对象清空。</p><p>注意：不可直接 Dog.prototype = Animal.prototype，否则两者会指向 “同一个对象”，使 Dog 的局部方法错误地升级为 Animal 的方法。</p><h2 id="四-借用构造函数">四、借用构造函数</h2><h3 id="一-如何借用">（一）如何借用</h3><p>上面，我们通过原型链实现了对象方法的继承。然而，在多级构造结构中，除了对象方法的继承外，我们往往还需要同类属性的复用。例如：</p><pre><code class="language-js">function Human(name,age) {}
+function Teacher(name,age,rank)
+{
+  this.name = name;
+  this.age = age;
+  this.rank = rank;
+}
+function Student(name,age,score)
+{
+  this.name = name;
+  this.age = age;
+  this.score = score;
+}
+Teacher.prototype = Object.create(Human.prototype);
+Student.prototype = Object.create(Human.prototype);
+Human.prototype.introduce = function () { console.log(`我是${this.name}`); };
+const Alice = new Teacher(&quot;Alice&quot;,30,&quot;primarily&quot;);
+const Bob = new Student(&quot;Bob&quot;,15,&quot;100&quot;);</code></pre><p>这里实现了 Teacher、Student 两个原型对象，并且借助原型链 + 上级构造函数 Human，使它们具有了共同的方法 introduce() 。然而我们观察到，Teacher 和 Student 作为 Human 的下级构造函数，他们都具有 name、age 等共同属性。如果我们要创建很多的下级构造函数，例如 Worker、Manager、Doctor ······ 就要把这些属性重复写很多遍，造成不必要的麻烦。</p><p>这个问题显然不能借用原型链共有属性来解决，因为原型链会使所有人共有一份相同的属性。</p><p>为了解决这个问题，我们需要采用一种设计：由上级构造函数规定一些公共属性，再使下级构造函数<strong>复用</strong>上级构造函数的这些公共属性、再自己额外加一些新的属性，从而组成新的对象。这种方法就是 <strong>借用构造函数</strong>。</p><p>下面是一个例子：</p><pre><code class="language-js">function Human(name,age,income)
+{
+  this.name = name;
+  this.age = age;
+  this.income = income;
+}
+function Teacher(name,age,income,rank)
+{
+  Human.call(this,name,age,income);
+  this.rank = rank;
+}
+function Student(name,age,income,score)
+{
+  Human.call(this,name,age,income);
+  this.score = score;
+}
+function Doctor(name,age,income,department)
+{
+  Human.call(this,name,age,income);
+  this.department = department;
+}
+const Bob = new Student(&quot;Bob&quot;,15,&quot;100&quot;);
+const Tylor = new Teacher(&quot;Tylor&quot;,30,&quot;primarily&quot;);
+const Mac = new Doctor(&quot;Mac&quot;,40,&quot;Internal Medicine&quot;);</code></pre><p>关键在这一行：</p><pre><code class="language-js">Human.call(this,name,age,income);</code></pre><p>这里发生了这样一件事：将当前的下级构造函数的 this（即待创建的新对象）通过 call() 方法指定给上级构造函数作为上级构造函数的 this，再借用上级构造函数，为下级构造函数的 this 批量添加 name、age、income 三种属性。这就是 <strong>借用构造函数</strong>。</p><h3 id="二-借用构造函数-和原型链的区别">（二）“借用构造函数” 和原型链的区别</h3><p>借用构造函数，是借用上级构造函数，将上级构造函数所定义的 “公共属性” 创建给了下级构造函数，它们是独立的；而原型链是使下级构造函数没有某属性时，<strong>沿用 </strong>上级构造函数的 prototype<strong> </strong>的属性，它们是<strong>共享</strong>的。</p><p>或者说，上级构造函数有两种方法，可以将自己当作 “模板” 提供给下级构造函数使用：</p><ul><li><p>提供 上级构造函数.prototype 作为 下级构造函数.prototype 的原型对象，使下级构造函数创建的新对象们能共享同一份方法和属性。</p></li><li><p>上级构造函数自己定义一些公共的构造内容（如 name、age），下级构造函数先借用上级构造函数将 “公共部分” 构造出来后，再自己在其基础上继续构造，创建各有不同的对象。</p></li></ul><p>注意：借用构造函数本身不会影响原型链。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

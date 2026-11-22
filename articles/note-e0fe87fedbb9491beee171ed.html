@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第五章 对象进阶 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第五章 对象进阶</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E5%A4%8D%E4%B9%A0-%E5%AF%B9%E8%B1%A1%E4%B9%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E5%80%BC">一、复习——对象也是一种值</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">二、对象的基础操作</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E8%AF%BB%E5%8F%96%E5%92%8C%E4%BF%AE%E6%94%B9%E5%B1%9E%E6%80%A7">（一）读取和修改属性</a>
+<a class="tab tabH4" href="#1-%E7%82%B9%E8%AF%AD%E6%B3%95">1、点语法</a>
+<a class="tab tabH4" href="#2-%E6%96%B9%E6%8B%AC%E5%8F%B7%E8%AF%AD%E6%B3%95">2、方括号语法</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7">（二）添加属性</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%88%A0%E9%99%A4%E5%B1%9E%E6%80%A7">（三）删除属性</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95">三、对象的方法</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E6%A3%80%E6%9F%A5%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%85%B7%E6%9C%89%E6%9F%90%E5%B1%9E%E6%80%A7">（一）检查对象是否具有某属性</a>
+<a class="tab tabH4" href="#1-in-%E8%BF%90%E7%AE%97%E7%AC%A6">1、in 运算符</a>
+<a class="tab tabH4" href="#2-hasown-%E6%96%B9%E6%B3%95">2、hasOwn() 方法</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%AF%B9%E8%B1%A1-%E6%95%B0%E7%BB%84-%E8%BD%AC%E5%8C%96%E6%96%B9%E6%B3%95">（二）对象=&gt;数组 转化方法</a>
+<a class="tab tabH4" href="#1-%E8%8E%B7%E5%8F%96%E5%B1%9E%E6%80%A7-object-keys">1、获取属性 —— Object.keys()</a>
+<a class="tab tabH4" href="#2-%E8%8E%B7%E5%8F%96%E5%B1%9E%E6%80%A7%E5%80%BC-object-values">2、获取属性值 —— Object.values()</a>
+<a class="tab tabH4" href="#3-%E8%8E%B7%E5%8F%96%E9%94%AE%E5%80%BC%E5%AF%B9-object-entries">3、获取键值对 —— Object.entries()</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1">（三）遍历对象</a>
+<a class="tab tabH2" href="#%E5%9B%9B-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84">四、对象的解构</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E8%A7%A3%E6%9E%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95">（一）解构对象的基本方法</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E8%AE%BE%E7%BD%AE%E5%8F%98%E9%87%8F%E5%90%8D-%E9%BB%98%E8%AE%A4%E5%80%BC">（二）设置变量名、默认值</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%B5%8C%E5%A5%97%E8%A7%A3%E6%9E%84">（三）嵌套解构</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E5%89%A9%E4%BD%99%E5%B1%9E%E6%80%A7">（四）剩余属性</a>
+<a class="tab tabH2" href="#%E4%BA%94-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%BF%9B%E9%98%B6%E8%A1%A8%E7%A4%BA">五、对象的进阶表示</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E7%94%A8%E5%8F%98%E9%87%8F%E8%A1%A8%E7%A4%BA%E5%B1%9E%E6%80%A7%E5%90%8D%E5%92%8C%E5%B1%9E%E6%80%A7%E5%86%85%E5%AE%B9">（一）用变量表示属性名和属性内容</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%AE%80%E5%86%99">（二）对象的简写</a>
+<a class="tab tabH2" href="#%E5%85%AD-%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84-this-%E6%98%AF%E4%BB%80%E4%B9%88">六、对象中的 this 是什么？</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%BC%95%E5%85%A5-%E4%B8%A4%E7%A7%8D%E8%B0%83%E7%94%A8%E4%B8%8B%E7%9A%84-this">（一）引入：两种调用下的 this</a>
+<a class="tab tabH4" href="#1-%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8">1、普通函数调用</a>
+<a class="tab tabH4" href="#2-%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8">2、对象方法调用</a>
+<a class="tab tabH3" href="#%E4%BA%8C-this-%E6%8C%87%E5%90%91%E8%B0%83%E7%94%A8%E5%AE%83%E7%9A%84%E5%AF%B9%E8%B1%A1">（二）this 指向调用它的对象</a>
+<a class="tab tabH4" href="#1-%E8%B0%83%E7%94%A8%E5%AF%B9%E8%B1%A1%E6%94%B9%E5%8F%98-this-%E4%B9%9F%E4%BC%9A%E6%94%B9%E5%8F%98">1、调用对象改变，this 也会改变</a>
+<a class="tab tabH4" href="#2-%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E6%8F%90%E5%8F%96%E4%B8%BA%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E5%90%8E-this-%E4%B9%9F%E4%BC%9A%E6%94%B9%E5%8F%98">2、对象方法提取为普通函数后，this 也会改变</a>
+<a class="tab tabH4" href="#3-%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1-this-%E6%8C%87%E5%90%91%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E5%B1%82%E5%AF%B9%E8%B1%A1">3、嵌套对象，this 指向最近的一层对象</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E7%89%B9%E6%AE%8A-this-%E8%A1%8C%E4%B8%BA">（三）箭头函数的特殊 this 行为</a>
+<a class="tab tabH2" href="#%E4%B8%83-%E5%87%BD%E6%95%B0%E7%9A%84-this-%E7%9A%84%E9%87%8D%E6%96%B0%E6%8C%87%E5%AE%9A">七、函数的 this 的重新指定</a>
+<a class="tab tabH3" href="#%E4%B8%80-call-%E5%92%8C-apply-%E5%87%BD%E6%95%B0-%E8%B0%83%E7%94%A8%E6%97%B6%E6%8C%87%E5%AE%9A-this">（一）call() 和 apply() 函数：调用时指定 this</a>
+<a class="tab tabH3" href="#%E4%BA%8C-bind-%E5%87%BD%E6%95%B0-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%E5%87%BD%E6%95%B0">（二）bind() 函数：创建新的函数</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E9%87%8D%E6%96%B0%E6%8C%87%E5%AE%9A-this-%E5%92%8C%E5%BD%A2%E5%8F%82%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">（三）重新指定 this 和形参有什么区别？</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-复习-对象也是一种值">一、复习——对象也是一种值</h2><p>我们已经知道，对象是一个具有独立身份的值，多个变量可以关联到同一个对象。例如：</p><pre><code class="language-js">const a = {
+    name: &quot;Alice&quot;,
+    age: 20
+};
+const b = a;
+b.name = &#39;Steve&#39;;
+console.log(a === b); // true</code></pre><p>b = a 并没有创建一个新的对象。它做的是：读取变量 a 中的值，将这个值赋给变量 b。因为<strong>这个值代表一个对象</strong>，<strong>所以 a 和 b 最终关联到同一个对象</strong>，而不是两个对象。</p><p>还有一个要注意的细节，在 JS 中，定义对象时，属性是以<strong>逗号</strong>为分隔的，最后一个属性结尾带不带逗号都可以。</p><h2 id="二-对象的基础操作">二、对象的基础操作</h2><h3 id="一-读取和修改属性">（一）读取和修改属性</h3><h4 id="1-点语法">1、点语法</h4><p>可通过 object.key 来操作对象 object 下的 key 属性。注意点语法只支持<strong>常值</strong>，不支持变量。</p><pre><code class="language-js">const key = &#39;name&#39;;
+console.log(a.key);             //输出的是 a.key 这个属性的内容，而不是 a.name</code></pre><h4 id="2-方括号语法">2、方括号语法</h4><p>方括号语法如下：</p><pre><code class="language-js">console.log(a[key]);            //输出的是 a.name 这个属性的内容
+console.log(a[&quot;name&quot;]);         //输出的是 a.name 这个属性的内容</code></pre><p>方括号语法支持变量作为属性（直接写变量就行）。如果需要使用常值读取对象属性，则需要字符串引号。</p><h3 id="二-添加属性">（二）添加属性</h3><pre><code class="language-js">const test = {
+  name: &quot;Alice&quot;,
+}
+test.score = 90;</code></pre><p>直接为对象中不存在的属性赋值，就会为对象增加该属性（追加到结尾）。</p><p>这里还涉及到我们之前说的 “const 并不是只能定义常量”。const 只是使 test 不能重新绑定到新的对象，但允许对 test 已经绑定的<strong>现有对象</strong>的属性进行更改。</p><h3 id="三-删除属性">（三）删除属性</h3><p>可以使用 delete 删除已有属性（delete object.key）。例如：</p><pre><code class="language-js">const test = {
+  name: &quot;Alice&quot;,
+  score: 90
+}
+delete test.score;
+console.log(test);      // { name:&quot;Alice&quot; }</code></pre><p>如果对象的一个属性不存在，则试图访问它时会返回 undefined。</p><h2 id="三-对象的方法">三、对象的方法</h2><h3 id="一-检查对象是否具有某属性">（一）检查对象是否具有某属性</h3><h4 id="1-in-运算符">1、in 运算符</h4><pre><code class="language-js">&quot;key&quot; in object</code></pre><p>例如：</p><pre><code class="language-js">const test = {
+  name: &quot;Alice&quot;
+}
+console.log(&quot;score&quot; in test)      // false</code></pre><p>in 语法还会检查对象的原型链，之后再说。</p><h4 id="2-hasown-方法">2、hasOwn() 方法</h4><p>基本方法如下：</p><pre><code class="language-js">Object.hasOwn(object,key);</code></pre><p>注意这里的 Object 是专有标识符，不是待查对象的名字，和 arr.includes() 等不同。</p><p>例如：</p><pre><code class="language-js">const test = {
+  name: &quot;Alice&quot;
+}
+console.log(Object.hasOwn(test,&quot;score&quot;))      // false</code></pre><p>此外也可以用 hasOwnProperty() 方法，这时点号前面是待查对象，例如：</p><pre><code class="language-js">console.log(test.hasOwnProperty(&quot;score&quot;))      // false</code></pre><p>细节：是 “score” 而不是 score，这里应当是属性名，而不是变量。</p><h3 id="二-对象-数组-转化方法">（二）对象=&gt;数组 转化方法</h3><p>下面所说的几个方法，可以转化对象，并且将其中的部分内容转为数组，稍后可以使用数组来处理数据。</p><p>下面的所有方法都只有一个参数 —— 需要转化的对象。下面的示例都使用此对象：</p><pre><code class="language-js">const student = {
+    name: &quot;Alice&quot;,
+    age: 20,
+    score: 95
+};</code></pre><h4 id="1-获取属性-object-keys">1、获取属性 —— Object.keys()</h4><p>可以将对象的所有属性名收集为一个新数组。例如：</p><pre><code class="language-js">console.log(Object.keys(student));        // [&quot;name&quot;,&quot;age&quot;,&quot;score&quot;]</code></pre><h4 id="2-获取属性值-object-values">2、获取属性值 —— Object.values()</h4><p>将对象的所有属性的内容收集为一个新数组。例如：</p><pre><code class="language-js">console.log(Object.values(student));      // [&quot;Alice&quot;,20,95]</code></pre><h4 id="3-获取键值对-object-entries">3、获取键值对 —— Object.entries()</h4><p>将对象转化为一个新数组，其元素是二维数组（[属性名, 属性值]）。例如：</p><pre><code class="language-js">console.log(Object.entries(student));</code></pre><p>结果如下：</p><pre><code class="language-json">[
+  [&quot;name&quot;,&quot;Alice&quot;],
+  [&quot;age&quot;,20],
+  [&quot;score&quot;,95]
+]</code></pre><p>注意：此种方法仍然是 “浅转化”，如果某对象的一个属性内容仍然是一个对象，则不会把这个对象也转为数组。</p><h3 id="三-遍历对象">（三）遍历对象</h3><p>数组可以使用 for of 语法来遍历，而对象可以使用 for in 语法遍历，操作方法类似。</p><pre><code class="language-js">const student = {
+    name: &quot;Alice&quot;,
+    age: 20,
+    score: 95
+};
+for (const key in student) console.log(student[key]);</code></pre><p>要注意，for in 语法赋给变量的是对象的<strong>属性名</strong>。</p><h2 id="四-对象的解构">四、对象的解构</h2><p>本节的示例均使用如下对象：</p><pre><code class="language-js">const student = {
+    name: &quot;Alice&quot;,
+    age: 20,
+    score: 95
+};</code></pre><p>对象的解构涉及到对象内容的拷贝，因此仍然要注意浅拷贝问题。因为已经强调了很多次，我们这里就不再多提了。</p><h3 id="一-解构对象的基本方法">（一）解构对象的基本方法</h3><p>如果想要从对象中取出几个值赋给变量，传统方法是这样的：</p><pre><code class="language-js">const name = student.name;
+const age = student.age;
+const score = student.score;</code></pre><p>JS 提供了一种快速方法，即解构对象，允许我们快速、批量将对象中的属性内容赋值给变量。语法如下：</p><pre><code class="language-js">const { name, age, score } = student;</code></pre><p>这样会创建 3 个变量 name、age、score，分别对应 student 的三个属性的内容。</p><p>注意：默认使用<strong>变量名</strong>来检索对象中的属性。如果变量名对应的属性不存在，则返回 undefined。例如：</p><pre><code class="language-js">const { name, score, age, grade } = student;
+console.log(grade);        // undefined
+console.log(score);        // 95</code></pre><h3 id="二-设置变量名-默认值">（二）设置变量名、默认值</h3><p>如果不想要使变量名 = 属性名，则可以使用 属性名:变量名 的写法（即“将属性A赋给变量M”）。下面是一个例子。</p><pre><code class="language-js">const { name:a, score:b, age:c } = student;
+console.log(b);            // 95</code></pre><p>这种写法是很常见的，因为很多对象可能都有相同的属性名，同时按变量名 = 属性名的方法解构可能会发生冲突。</p><p>如果要对多个对象使用相同方法解构，则可能出现某个对象没有某个属性的情况。这时，可以给该属性对应的变量取一个默认值。写法如下：</p><pre><code class="language-js">console.log(student.grade);    // undefined
+const { name:a, grade:b=0 } = student;
+console.log(b);                // 0</code></pre><p>当该属性返回 undefined（不是null，也不是NaN）时，JS 会将默认值赋给对应变量。</p><h3 id="三-嵌套解构">（三）嵌套解构</h3><p>如果对象的内容仍然具有对象，则可以嵌套解构，将子对象也解构出来。例如：</p><pre><code class="language-js">const student = {
+  name:&quot;Alice&quot;,
+  address:
+  {
+    city:&quot;Beijing&quot;,
+    street:&quot;Road 1&quot;
+  }
+}</code></pre><p>如果要获得 name、street（分别赋给 nameCopy、streetCopy），可以这样写：</p><pre><code class="language-js">const {
+  name:nameCopy,
+  address: { street:streetCopy }
+} = student;</code></pre><p>注意：这样得不到 address。还有要注意的是，这样相当于是把属性名从 address: 变成了 address: { street }，因此如果变量想用别名，则应当加在子对象的 street 上。</p><h3 id="四-剩余属性">（四）剩余属性</h3><p>JS 的对象解构中，允许使用 “剩余属性” 方法，将剩下的属性都收集到一个新对象中，这有些类似于函数的 “剩余参数”。例如：</p><pre><code class="language-js">const { name, ...otherInfo } = student;
+console.log(otherInfo);</code></pre><p>返回的内容是：</p><pre><code class="language-js">{
+  age:20,
+  score:95
+}</code></pre><h2 id="五-对象的进阶表示">五、对象的进阶表示</h2><h3 id="一-用变量表示属性名和属性内容">（一）用变量表示属性名和属性内容</h3><p>我们已经知道，对象的属性内容可以是变量，只要把变量名写到属性内容的位置即可：</p><pre><code class="language-js">const name = &quot;Alice&quot;;
+const age = 20;
+const student = {
+    name: name,
+    age: age
+};</code></pre><p>JS 的对象还支持使用变量名作为属性内容，方法就是使用<strong>方括号语法</strong>。根据字面量创建对象时，会读取变量的内容，然后将其作为属性名。</p><p>例如：</p><pre><code class="language-js">let p1 = &quot;name&quot;;
+let p2 = &quot;student&quot;;
+const student = {
+  [p1]:&quot;Alice&quot;,
+  [p2]:20
+};
+console.log(student.name);    // Alice
+p1 = &quot;score&quot;;
+console.log(student.name);    // Alice</code></pre><p>实际上方括号语法内是支持表达式运算的。例如，下面的写法是合法的：</p><pre><code class="language-js">const p1 = &quot;name&quot;;
+const student = {
+  [p1 + &quot;2&quot;]:&quot;Alice&quot;
+}
+console.log(student);          // { &quot;name2&quot;:&quot;Alice&quot; }</code></pre><p>实际上普通的方括号调用也支持这样的写法，例如 student[p1 + &quot;2&quot;]。</p><h3 id="二-对象的简写">（二）对象的简写</h3><p>如果我们想把几个变量放入一个对象，普通方法是这样的：</p><pre><code class="language-js">const name = &quot;Alice&quot;;
+const age = 20;
+const student = {
+    name: name,
+    age: age,
+    grade: 10
+};</code></pre><p>很多情况下，变量名就是对变量内容的描述，例如 name = &quot;Alice&quot;，等等。使用普通方法，我们需要手动定义一个属性名，再引用变量作为属性的内容；如果我们想直接用变量名作为属性名，可以使用简化语法，直接将属性名及冒号省去不写，JS 会将变量名作为属性名使用。例如：</p><pre><code class="language-js">const student = {
+    name,
+    age,
+    grade: 10
+};</code></pre><p>要注意的是，只有变量名/内容 = 属性名/内容的情况才能简写，其他情况仍按正常方法书写。</p><h2 id="六-对象中的-this-是什么">六、对象中的 this 是什么？</h2><p>this 是函数的一个基本变量，字面意义上是指向 “自己”。然而 “自己” 指的是什么，不同情况下会有很大的出入。</p><h3 id="一-引入-两种调用下的-this">（一）引入：两种调用下的 this</h3><p>JS 中有两种调用函数的方法，分别是 “普通函数调用” 和 “对象方法调用”。</p><h4 id="1-普通函数调用">1、普通函数调用</h4><pre><code class="language-js">function greet() {
+    console.log(this);
+}
+greet();</code></pre><p>这种情况下，函数就是函数，它是单独存在的。在 JS 的严格模式下，函数的 this 是 undefined。</p><h4 id="2-对象方法调用">2、对象方法调用</h4><pre><code class="language-js">const person = {
+    name: &quot;Alice&quot;,
+    greet: function() {
+        console.log(this);
+    }
+};
+person.greet();</code></pre><p>这种情况下，函数是对象的<strong>内容</strong>、函数作为对象的一个<strong>方法</strong>而存在，因此 this 指向的是<strong>这个对象本身</strong>（person）。</p><p>this 指向的是调用函数的那个“调用者”。普通函数的调用就是直接调用的，因此没有这个概念；而当函数作为对象的方法存在时，我们是通过对象来调用函数的，因此“调用者”是对象，this 指向对象。</p><h3 id="二-this-指向调用它的对象">（二）this 指向调用它的对象</h3><h4 id="1-调用对象改变-this-也会改变">1、调用对象改变，this 也会改变</h4><p>我们已经提到，this 指向的是<strong>调用它的对象</strong>。非常重要的一点是，this 的意义并<strong>不是由它的位置</strong>，而是<strong>由它所处函数的被调用方式</strong>决定的。this 并不是定义函数时就确定的一个量，调用方式不同，this 的含义就会改变。例如：</p><pre><code class="language-js">const person1 = {
+    name: &quot;Alice&quot;,
+    greet: function() {
+        console.log(this.name);
+    }
+};
+const person2 = {
+    name: &quot;Bob&quot;,
+    greet: person1.greet
+};
+person1.greet(); // Alice
+person2.greet(); // Bob</code></pre><p>person1.greet() 调用的是 person1 的 greet() 函数方法，因此 this 指向 person1，这是显然的。关键在 person2：虽然该函数是在 person1 中定义的，但改为 person2 调用后，this 就变成 person2 了。</p><p>注意：这里并不是 person2 通过 person1 调用了函数，而是 person2 直接调用了函数，因此调用该函数的对象就是 person2。这里还是要按 “引用” 的想法来思考：该函数并不是 person1 独有的，而是由 person2、person1 共同<strong>引用</strong>的，它同时是 person2、person1 的方法。</p><p>还可以得到一个引申结论：普通函数作为对象方法调用时，this 通常指向点号左边的对象。（说“普通函数”，是因为箭头函数不是这样的）</p><h4 id="2-对象方法提取为普通函数后-this-也会改变">2、对象方法提取为普通函数后，this 也会改变</h4><p>这是另外一个例子：</p><pre><code class="language-js">const person = {
+    name: &quot;Alice&quot;,
+    greet: function() {
+        console.log(this.name);
+    }
+};
+const fun = person.greet;
+fun();         // undefined (严格模式)</code></pre><p>这个例子中，我们将 person 对象的 greet() 函数方法提取了出来，并且赋给了 fun。我们发现，调用 person.greet() 和调用 fun() 的 this 不同。</p><p>这仍然需要通过 “引用” 来解释。上面的行为实际上是把 person 对 greet() 的<strong>引用</strong>复制给了 fun，fun 独立持有了 greet() 函数的引用，因此 fun() 直接调用了 greet() 函数，不再需要经过 person 对象，this 自然就变成了 undefined（调用变成了普通函数调用）。</p><h4 id="3-嵌套对象-this-指向最近的一层对象">3、嵌套对象，this 指向最近的一层对象</h4><p>看看下面的情况：</p><pre><code class="language-js">const company = {
+    name: &quot;OpenAI&quot;,
+    department: {
+        name: &quot;Research&quot;,
+        showName: function() {
+            console.log(this.name);
+        }
+    }
+};
+company.department.showName(); // Research</code></pre><p>company 对象中嵌套了 department 对象。这时调用 showName() 方法，this 不是最顶层的 company 对象，而是最近的 company.department 对象。</p><p>事实上，this 指向的是直接调用它的那个对象。这里是通过 company 中的 department 对象调用 showName()，因此直接调用对象是 department。</p><h3 id="三-箭头函数的特殊-this-行为">（三）箭头函数的特殊 this 行为</h3><p>与普通函数不同，箭头函数很特殊，它<strong>没有自己的 this</strong>。在箭头函数中使用 this 时，它会尝试从<strong>定义箭头函数的外层作用域</strong>中取得 this。例如：</p><pre><code class="language-js">const person = {
+    name: &quot;Alice&quot;,
+    greet: function() {
+        const say = () =&gt; {
+            console.log(this.name);
+        };
+        say();
+    }
+};
+person.greet(); // Alice</code></pre><p>这里箭头函数没有自己的 this，因此它使用它的外层作用域（由 greet() 函数创造）中的 this（这个 this 是函数 greet() 提供的，指向person）。所以箭头函数并不是普通函数的简单简写，其行为和普通函数有重大差异。注意：<strong>对象的花括号不会创建作用域</strong>，这里箭头函数找的是外层的函数作用域。</p><p>下面的代码也得不到a，原因是一样的。箭头函数会试图在自己以外的作用域寻找 this，但对象字面量不会创建指向自己的 this，因此箭头函数得不到 a。</p><pre><code class="language-js">const a = {
+    greet: () =&gt; console.log(this)
+};
+a.greet();</code></pre><p>拓展：如果把箭头函数改为普通函数，例如：</p><pre><code class="language-js">const person = {
+    name: &quot;Alice&quot;,
+    greet: function() {
+        const say = function () {
+            console.log(this.name);
+        };
+        say();
+    }
+};
+person.greet();</code></pre><p>JS 会返回 TypeError，不会有正常输出。因为这里的 say() 函数是普通函数调用，虽然它有了 this，但它的 this 是 undefined，访问 undefined.name 会得到 TypeError。</p><p>再三强调：决定 this 的并不是 this 的位置（如函数嵌套关系等），或者说，this 是 “这个调用者” 而不是 “这个定义者”。从之前的例子很容易想到 this 指向的是它外面的那个对象，因而这里可能错误地认为子函数的 this 指向父函数。事实上，this 和函数的嵌套结构并没有关系！</p><h2 id="七-函数的-this-的重新指定">七、函数的 this 的重新指定</h2><pre><code class="language-js">function introduce() {
+    console.log(`我是 ${this.name}`);
+}
+const person1 = { name: &quot;Alice&quot; };
+const person2 = { name: &quot;Bob&quot; };</code></pre><p>如果我们直接使用 introduce()，则严格模式下 this 会得到 undefined，introduce 函数并不能发挥作用。</p><p>如果我们想要使 introduce 函数在普通调用方式下，this 也能起到作用（例如让 this 指定为 person1），要怎么办？答案就是使用 call()、apply() 和 bind() 三个函数。</p><h3 id="一-call-和-apply-函数-调用时指定-this">（一）call() 和 apply() 函数：调用时指定 this</h3><p>call函数可以立即调用某个函数，并且指定被调函数的 this 的指向。使用方法是：</p><pre><code class="language-js">function.call(thisArg, 参数1, 参数2, ...);</code></pre><p>例如：</p><pre><code class="language-js">introduce.call(person1);      //我是 Alice</code></pre><p>call() 的第一个参数是 this 的指向。如果被调函数有其他形式参数，则其他形参依次跟在 this 参数的后面。例如：</p><pre><code class="language-js">function introduce(age, city) {
+    console.log(`${this.name}，${age}岁，来自${city}`);
+}
+const person = { name: &quot;Alice&quot; };
+introduce.call(person, 20, &quot;北京&quot;);</code></pre><p>apply 函数的作用和 call 一致，但 apply 传入被调函数的形参时采用的是数组方法。例如：</p><pre><code class="language-js">introduce.call(person, 20, &quot;北京&quot;);
+introduce.apply(person, [20, &quot;北京&quot;]);</code></pre><p>或者说 apply() 函数只有两个形参，第一个是 this 的指向，第二个是被调函数的所需参数构成的一个数组。</p><h3 id="二-bind-函数-创建新的函数">（二）bind() 函数：创建新的函数</h3><p>bind 函数并不会立即调用某个函数，而是返回一个绑定了指定 this 的新函数。例如：</p><pre><code class="language-js">function introduce() {
+    console.log(`我是 ${this.name}`);
+}
+const person = { name: &quot;Alice&quot; };
+const newIntroduce = introduce.bind(person);
+newIntroduce();          // 我是 Alice</code></pre><p>这相当于是复制了一个 introduce 函数（<strong>不是引用</strong>），然后将这个新函数的 this 绑定为 person。</p><p>甚至可以这样：</p><pre><code class="language-js">const person1 = { name: &quot;Alice&quot; };
+const person2 = { name: &quot;Bob&quot; };
+const newIntroduce = introduce.bind(person1);
+newIntroduce.call(person2); // 仍然是 Alice</code></pre><p>这是因为 bind 绑定的 this 会固定在新函数中，不会被后续操作改写。即使显示声明 call(person2)，新函数的 this 仍然会指向bind的 person1。</p><p>bind 函数也可以传入被调函数的形参，具体形式和 call 一致，都是追加在后面。但需要注意的是，bind 加入的形参和 this 一样，也会固定在新函数中，不会被后续操作改写。</p><h3 id="三-重新指定-this-和形参有什么区别">（三）重新指定 this 和形参有什么区别？</h3><p>使用 call()、apply()、bind() 函数定义函数的 this，具体效果和直接使用形参指定函数的操作对象是一致的。那为什么还要有 this 以及 call、apply、bind 呢？</p><p>这主要是设计哲学方面的考虑。确实可以直接用形参来代替这方面的 this 功能，但这并不一定是好用的。</p><p>JS 提供给了我们实现同一目的的多种工具（例如数组遍历的 forEach 和 for of），使我们可以根据实际情况灵活选择最适合的方法。this + call 等方法和直接指定函数的形参，确实都能实现相同的效果，但它们各有各的 “最切合的使用方式”。例如，this 是一个独立于函数形参的变量，需要使用 call() 单独指定，因而语义上它的重要性被加强了，这样可以更直观地体现出变量间的主次关系，等等。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

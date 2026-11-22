@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CSS学习——文档流与显示方式 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">CSS学习——文档流与显示方式</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E6%96%87%E6%A1%A3%E6%B5%81-normal-flow">一、文档流（normal-flow）</a>
+<a class="tab tabH4" href="#1-%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0-block%E7%B1%BB">1、块级元素（block类）</a>
+<a class="tab tabH4" href="#3-%E8%A1%8C%E5%86%85%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0-inline-block%E7%B1%BB">3、行内块级元素（inline-block类）</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E6%98%BE%E7%A4%BA%E6%96%B9%E5%BC%8F-display">二、显示方式（display）</a>
+<a class="tab tabH4" href="#1-%E6%99%AE%E9%80%9A%E6%98%BE%E7%A4%BA%E6%96%B9%E5%BC%8F">1、普通显示方式</a>
+<a class="tab tabH4" href="#2-flex-grid%E6%98%BE%E7%A4%BA%E6%96%B9%E5%BC%8F">2、Flex/Grid显示方式</a>
+<a class="tab tabH4" href="#3-%E5%85%83%E7%B4%A0%E5%9D%97%E5%8C%96">3、元素块化</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E4%BD%8D%E7%BD%AE-position">三、位置（position）</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%AF%B9%E6%96%87%E6%A1%A3%E6%B5%81%E7%9A%84%E7%90%86%E8%A7%A3">（一）对文档流的理解</a>
+<a class="tab tabH3" href="#%E4%BA%8C-position%E7%9A%84%E5%8F%82%E6%95%B0">（二）position的参数</a>
+<a class="tab tabH4" href="#1-%E5%8F%82%E5%8A%A0%E6%96%87%E6%A1%A3%E6%B5%81">1、参加文档流</a>
+<a class="tab tabH4" href="#2-%E8%84%B1%E7%A6%BB%E6%96%87%E6%A1%A3%E6%B5%81">2、脱离文档流</a>
+<a class="tab tabH4" href="#3-%E7%89%B9%E6%AE%8A%E7%9A%84%E5%8F%82%E5%8A%A0%E6%96%87%E6%A1%A3%E6%B5%81-sticky">3、特殊的参加文档流——sticky</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-文档流-normal-flow">一、文档流（normal-flow）</h2><p>文档流是HTML排列元素的基本方式。HTML/CSS 基本上是按 HTML 顺序自上而下排列元素的，但它同时还将元素分为 <strong>块级元素、行内元素、行内块级元素</strong> 三类，不同元素有不同排列规则：</p><h4 id="1-块级元素-block类"><strong>1、块级元素</strong>（block类）</h4><p>独占一行，宽度auto（一般为100%），宽、高可以手动设置。</p><pre><code class="language-html">&lt;div&gt; &lt;p&gt; &lt;h1&gt; &lt;ul&gt;</code></pre><p><strong>2、行内元素</strong><strong>（inline类）</strong></p><p>多个邻近元素共享一行（从左到右排列，排满换行），宽高自动确定，不能设置。</p><pre><code class="language-html">&lt;span&gt; &lt;a&gt; &lt;strong&gt;</code></pre><p>行内元素只能设定左右margin，无法设置上下margin。</p><h4 id="3-行内块级元素-inline-block类"><strong>3、行内块级元素</strong>（inline-block类）</h4><p>相当于行内元素，但可以设置宽高。（可用vertical-align实现行内的垂直居中）</p><pre><code class="language-html">&lt;img&gt; &lt;input&gt; &lt;button&gt;</code></pre><h2 id="二-显示方式-display">二、显示方式（display）</h2><p>显示方式规定了HTML元素如何显示，它可以规定：</p><ul><li><p>元素自己如何参加文档流（使元素成为块级、行内、行内块级元素）。</p></li><li><p>元素内的子元素如何排列（flex、grid）。</p></li></ul><p>注意：display属性是不继承的。</p><h4 id="1-普通显示方式">1、普通显示方式</h4><pre><code class="language-css">display: none;</code></pre><p>最简单的显示方式。这意味着元素不会被渲染，也不占据任何位置，使元素在视觉上不存在。</p><pre><code class="language-css">display: block;                         //成为块级元素
+display: inline;                        //成为行内元素
+display: inline-block;                  //成为行内块级元素</code></pre><p>使元素按块级、行内、行内块级元素显示。</p><h4 id="2-flex-grid显示方式"><strong>2、Flex/Grid显示方式</strong></h4><pre><code class="language-css">display: flex / inline-flex;
+display: grid / inline-grid;</code></pre><p>这些属性会使元素成为 flex/grid 容器，使直接子元素被块化为块级元素，并且按 flex/grid 方式排列。</p><p>若没有 inline- 前缀，则容器本身会成为块级元素；否则容器会成为行内块级元素。</p><h4 id="3-元素块化">3、元素块化</h4><p>一些情况下，浏览器会忽略CSS声明，强制将某些元素计算为块级元素，这种情况被称为块化。</p><p>块化的常见原因是：</p><ul><li><p>元素作为 flex/grid 容器的直接子元素</p></li><li><p>元素脱离了文档流（position:fixed / absolute）</p></li></ul><p>这两种情况下，“行内”的概念不存在，元素必须是块级元素。</p><h2 id="三-位置-position">三、位置（position）</h2><p>位置属性规定了HTML元素的位置。HTML文档流自上而下排列元素，但position参数可以使元素脱离文档流，按其他方式定位。</p><h3 id="一-对文档流的理解">（一）对文档流的理解</h3><p>文档流是HTML文档排列的基础方式，HTML根据一定的规则，自上而下为每一个元素分配位置。这种情况下，元素的位置是依托文档流定位的，例如：</p><pre><code class="language-html">&lt;div&gt;A&lt;/div&gt;
+&lt;div&gt;B&lt;/div&gt;
+&lt;div&gt;C&lt;/div&gt;</code></pre><p>B始终具有一个相对位置：它处在A的下面、C的上面。A、C中有一个固定的位置是留给B的，A、B、C三个元素靠在一起，不管页面如何滚动，都是这样。这就是“参加文档流”。</p><p>如果B脱离了文档流，就说明B不再参与HTML文档流的排队，不再在文档流中分到相对位置，而采用其他的定位规则。这样，A、C就直接连在一起了。而B此时可以采取其他定位规则，例如隐藏起来，或始终浮动在A、C的上方、保持在视口顶部/中心而不受页面滚动的影响，等等。</p><h3 id="二-position的参数">（二）position的参数</h3><h4 id="1-参加文档流">1、参加文档流</h4><pre><code class="language-css">position: static;            //默认值
+position: relative;</code></pre><p>position 的默认值是 static，即正常参加文档流，元素的位置由文档流决定，top/left/z-index 等属性无效。</p><p>relative 虽然参加文档流，但它允许参照 <strong>自己在文档流中的原先位置 </strong>改变位置（只是视觉上的偏移，文档流中的实际位置不变）。</p><p>除此之外，relative 还经常用于给 absolute 提供定位参照物。</p><h4 id="2-脱离文档流">2、脱离文档流</h4><pre><code class="language-css">position: absolute;
+position: fixed;</code></pre><p>这两者都脱离文档流，但决定元素位置的参照物不同。</p><ul><li><p>absolute 参照 <strong>最近的position不等于static的上层元素</strong> 改变位置（如果没有，则相对初始包含块）。如果不设置 top/left 等属性，则元素会停在它原本在文档流中应当出现的位置。</p></li><li><p>fixed 参照 <strong>视口（浏览器展示页面的区域）</strong>决定位置，页面滚动时位置不变。</p></li></ul><h4 id="3-特殊的参加文档流-sticky">3、特殊的参加文档流——sticky</h4><pre><code class="language-css">position: sticky;</code></pre><p>sticky 参加文档流，但它的位置和滚动有关。</p><p>sticky 需要事先设置一个阈值（top/bottom等），元素位置未达到阈值（或者没有阈值）时正常参加文档流、相当于 relative，达到阈值时就被约束在阈值的位置（但它原来在文档流中占有的空间仍会保留）。sticky 的定位参照物是 <strong>最近的上层可滚动容器</strong>（overflow:auto / scroll / <strong>hidden</strong>）。</p><p>如果sticky的父元素发生了滚动，当sticky碰到其父元素的底部以后，父元素的底部会把sticky托走，sticky元素不再被约束在原有位置。</p><p>注意：overflow:hidden只是没滚动条，用户无法滚动（但JS可滚动），也属于可滚容器。如果sticky定位的可滚动容器是overflow: hidden，对用户来说sticky会失效。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

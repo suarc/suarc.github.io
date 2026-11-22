@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>DSA 学习 —— 第二章 算法复杂度计算 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">DSA 学习 —— 第二章 算法复杂度计算</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E5%AF%B9%E6%95%B0%E5%A4%8D%E6%9D%82%E5%BA%A6-log-n">一、对数复杂度 log n</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <h2 id="一-对数复杂度-log-n">一、对数复杂度 log n</h2><p>我们之前已经学习过常数增长 O(1)、线性增长 O(n)、平方和立方增长 O(n^2)、O(n^3)，现在来学习新的增长模型。</p><p>我们用实际的二分查找算法来说明什么算法的复杂度是 O(log n)。</p><p>假设我们有 1024 个有序数据，现在要找到其中的一个，则最差情况下每次操作的情况是：</p><div class="md-table"><table><thead><tr><th style="text-align:center">操作次数</th><th style="text-align:center">剩余元素</th><th style="text-align:center">操作次数</th><th style="text-align:center">剩余元素</th></tr></thead><tbody><tr><td style="text-align:center">1</td><td style="text-align:center">512</td><td style="text-align:center">6</td><td style="text-align:center">16</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">256</td><td style="text-align:center">7</td><td style="text-align:center">8</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">128</td><td style="text-align:center">8</td><td style="text-align:center">4</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">64</td><td style="text-align:center">9</td><td style="text-align:center">2</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">32</td><td style="text-align:center">10</td><td style="text-align:center">1</td></tr></tbody></table></div><p>每次查找，都能排除掉剩下的元素中一半的元素。因此，有：(1024)×(1/2)^T(10) = 1，从而得到 2^T(n) = n、T(n) = log(2,n)。因此，二分查找的时间复杂度为 O(log n)。</p><p>如果我们将数据规模扩大至 1,048,576，数据扩大了 1000 倍，但二分查找的操作次数却只从 10 扩大到了 20！这说明 O(log n) 复杂度在数据规模大幅增加的同时，操作次数只增加很少。</p><p><strong>注意</strong>：如果每次操作减少的是 1/3，我们也称之为 O(log n)。只要对数的下标是大于1的常数，我们一般都直接写 O(log n)，略去下标不写。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

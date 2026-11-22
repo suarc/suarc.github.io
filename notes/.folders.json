@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "folders": [
+    {
+      "id": "f_mvtfzwve_0044",
+      "name": "Linux 学习",
+      "createdAt": "2026-10-29T11:10:51.434Z"
+    },
+    {
+      "id": "f_mvtg0do8_1w0h",
+      "name": "JS学习",
+      "createdAt": "2026-10-29T11:11:13.208Z"
+    },
+    {
+      "id": "f_mvtg0sgx_3310",
+      "name": "HTML/CSS学习",
+      "createdAt": "2026-10-29T11:11:32.385Z"
+    },
+    {
+      "id": "f_mw644pai_5yqa",
+      "name": "数据结构与算法",
+      "createdAt": "2026-11-07T07:59:39.786Z"
+    }
+  ],
+  "notes": {
+    "Linux 学习——第四章 进程及其管理.txt": "f_mvtfzwve_0044",
+    "JS学习——第四章 数组进阶.txt": "f_mvtg0do8_1w0h",
+    "JS学习——第三章 函数.txt": "f_mvtg0do8_1w0h",
+    "CSS学习——视觉与排版.txt": "f_mvtg0sgx_3310",
+    "CSS学习——文档流与显示方式.txt": "f_mvtg0sgx_3310",
+    "CSS学习——Grid布局.txt": "f_mvtg0sgx_3310",
+    "JS学习——第一二章 基础知识 数组与对象.txt": "f_mvtg0do8_1w0h",
+    "编程基础知识——编程范式.txt": "f_mvtg0do8_1w0h",
+    "JS学习——第六章 构造函数与原型链.txt": "f_mvtg0do8_1w0h",
+    "JS学习——第五章 对象进阶.txt": "f_mvtg0do8_1w0h",
+    "JS学习——第七章 面向对象编程进阶.txt": "f_mvtg0do8_1w0h",
+    "Linux 学习——第五章 服务与 systemd.txt": "f_mvtfzwve_0044",
+    "Linux 学习——第六章 网络基础.txt": "f_mvtfzwve_0044",
+    "JS学习——第八章 字符串.txt": "f_mvtg0do8_1w0h",
+    "Linux 学习——第二章 用户与权限.txt": "f_mvtfzwve_0044",
+    "Linux 学习——第三章 软件包的安装和管理.txt": "f_mvtfzwve_0044",
+    "Linux 学习——第一章 基础.txt": "f_mvtfzwve_0044",
+    "DSA 学习 —— 第一章 算法的基本属性.txt": "f_mw644pai_5yqa",
+    "DSA 学习 —— 第二章 算法复杂度计算.txt": "f_mw644pai_5yqa",
+    "CSS学习——伪类与伪元素.txt": "f_mvtg0sgx_3310",
+    "CSS学习——选择器基础.txt": "f_mvtg0sgx_3310",
+    "CSS学习——动画.txt": "f_mvtg0sgx_3310",
+    "CSS学习——响应式布局.txt": "f_mvtg0sgx_3310"
+  }
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>DSA 学习 —— 第一章 算法的基本属性 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">DSA 学习 —— 第一章 算法的基本属性</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E7%AE%97%E6%B3%95%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">一、算法基本概念</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E4%BB%8B%E7%BB%8D">（一）介绍</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%91%BD%E9%A2%98%E5%92%8C%E6%83%85%E5%86%B5">（二）命题和情况</a>
+<a class="tab tabH4" href="#1-%E5%85%A8%E7%A7%B0%E5%91%BD%E9%A2%98-%E5%92%8C%E5%AD%98%E5%9C%A8%E5%91%BD%E9%A2%98">1、全称命题 ∀ 和存在命题 ∃</a>
+<a class="tab tabH4" href="#2-%E6%9C%80%E5%A5%BD%E6%83%85%E5%86%B5%E5%92%8C%E6%9C%80%E5%9D%8F%E6%83%85%E5%86%B5">2、最好情况和最坏情况</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6">二、算法的复杂度</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">（一）为什么需要复杂度分析</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">（二）时间复杂度</a>
+<a class="tab tabH4" href="#1-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">1、时间复杂度</a>
+<a class="tab tabH4" href="#2-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%BB%86%E5%88%86">2、时间复杂度的细分</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">（三）空间复杂度</a>
+<a class="tab tabH4" href="#1-%E8%BE%93%E5%85%A5%E7%A9%BA%E9%97%B4-%E8%BE%85%E5%8A%A9%E7%A9%BA%E9%97%B4%E5%92%8C%E8%BE%93%E5%87%BA%E7%A9%BA%E9%97%B4">1、输入空间、辅助空间和输出空间</a>
+<a class="tab tabH4" href="#2-%E8%BE%85%E5%8A%A9%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">2、辅助空间复杂度</a>
+<a class="tab tabH4" href="#3-%E8%BE%85%E5%8A%A9%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E5%9D%91">3、辅助空间复杂度的坑</a>
+<a class="tab tabH3" href="#%E5%9B%9B-%E7%BB%BC%E5%90%88%E4%BE%8B%E5%AD%90">（四）综合例子</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E8%AF%A6%E8%A7%A3%E5%A4%A7-o-%E5%88%86%E6%9E%90%E6%B3%95">三、详解大 O 分析法</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <p>数据结构与算法（DSA）从这里开始。</p><h2 id="一-算法基本概念">一、算法基本概念</h2><h3 id="一-介绍">（一）介绍</h3><p>什么是数据结构？什么又是算法？</p><ul><li><p>数据结构是数据在计算机中的组织和存储方式；</p></li><li><p>算法是解决问题的一系列方法和步骤。</p></li></ul><h3 id="二-命题和情况">（二）命题和情况</h3><p>先引入一个简单算法：传入一个含有学生对象的数组，判断其中是否有不及格（score&lt;60）的学生。</p><pre><code class="language-js">const arr=[{name:&#39;Alice&#39;,score:60},{name:&#39;Bob&#39;,score:58}];
+function isNoPassed(student)
+{
+  for(let i=0;i&lt;student.length;i++)
+  {
+    if(student[i].score&lt;60) return true;
+  }
+  return false;
+}
+console.log(isNoPassed(arr));          // true</code></pre><h4 id="1-全称命题-和存在命题">1、全称命题 ∀ 和存在命题 ∃</h4><p>全称命题和存在命题是两种基本命题，上面的算法属于存在命题。</p><p>存在命题只需要有一个元素成立则命题成立，而全称命题要求全部元素均成立。若存在命题找到了一个正面证据，或者全称命题找到了一个反面证据，则可以直接判定命题成立/不成立，并且 break（或触发 return），不需要再继续寻找；反之则需要继续寻找符合条件的元素。</p><p>此外，全称命题和存在命题具有如下性质：</p><ul><li><p>全称命题对空集合始终成立；</p></li><li><p>存在命题对空集合始终不成立。</p></li></ul><h4 id="2-最好情况和最坏情况">2、最好情况和最坏情况</h4><p>存在命题中，只要找到一者成立即可判定成立。然而这一者的位置是不确定的，有可能一开始就找到了，也有可能到最后才找到。例如：</p><p>假设有 1000 个学生，1个人不及格。如果第1个人就不及格，则只需找一次元素即得到 isNoPassed = true；但如果不及格的是第 1000 个人，则需要把 1000 个学生都各自判定一遍，才能得到 true。</p><p>在算法中，我们将这两种情况分别称为 “最好情况” 和 “最坏情况”。</p><ul><li><p>最好情况（Best Case）：最有利的输入情况下，算法需要多少操作？</p></li><li><p>最坏情况（Worst Case）：最不利的输入情况下，算法需要多少操作？</p></li></ul><p>例如，上面这一算法的最好情况是 1 次对比，而最坏情况是 1000 次对比。</p><h2 id="二-算法的复杂度">二、算法的复杂度</h2><h3 id="一-为什么需要复杂度分析">（一）为什么需要复杂度分析</h3><p>假设为了完成同一个任务，我们设计了两个程序（两种算法）。它们的情况是：</p><ul><li><p>程序 A：处理 1000 条数据需要 1000 次操作。</p></li><li><p>程序 B：处理 1000 条数据需要 100000 次操作。</p></li></ul><p>这里显然 A 是更优的。</p><p>然而，如果数据不是 1000 条，而是 1000 万条呢？这时结果可能就会发生改变。算法 A 可能在大数据下表现极差，因而算法 B 反而更加适用。同时当规模较大时，我们往往不止会关心操作所花时间，还需要考虑操作所占用的资源，这种情况下 A、B 的优劣也无法按操作次数来区分。</p><p>我们不能简单地拿某个规模下的运算次数等来评估算法的复杂程度、算法的优劣 —— 仅仅知道算法在某个输入规模下的操作次数，并不足以判断它在其他规模下的表现。我们还需要研究操作次数随输入规模增长的规律。因此，我们需要引入数学上的<strong>算法复杂度</strong>的概念。</p><h3 id="二-时间复杂度">（二）时间复杂度</h3><h4 id="1-时间复杂度">1、时间复杂度</h4><p>算法复杂度的第一方面是<strong>时间复杂度</strong>，它说明了执行操作的增长趋势 —— 数据变多后，算法会增加多少工作量（从而增加时间）？</p><p>例如，下面是两个算法：</p><pre><code class="language-js">function testA(arr) {
+  console.log(arr[0]);
+}
+
+function testB(arr) {
+  for(let i=0;i&lt;arr.length;i++) console.log(arr[i]);
+}
+
+function testC(arr) {
+  for(let i=0;i&lt;arr.length;i++)
+    for(let j=0;j&lt;arr.length;j++)
+      console.log(arr[i][j]);
+}</code></pre><p>我们先将 console.log 执行次数设为 y，数据量（arr.length）设为 n。</p><ul><li><p>第一个算法中，不管 n 有多大，始终只读取 arr[0]，因此 y=1，复杂度是 O(1)。</p></li><li><p>第二个算法中，当 n 增大时，y 的增大倍数与 n 相同，因此 y 与 n 线性相关，复杂度是 O(n)。</p></li><li><p>第三个算法中，n 每增大 10 倍，y 增大 100 倍（外层 for 和内层 for 各自增大 10 倍，共 100 倍），因此 y 与 n 平方相关，复杂度是 O(n^2)。</p></li></ul><p>注意：这里我们用了大 O 表示法，它描述的是算法复杂度的渐近增长上界，是一种趋势，和具体的增长方程不能等同。例如，若 y=2n+1，复杂度仍为O(n)。</p><h4 id="2-时间复杂度的细分">2、时间复杂度的细分</h4><p>根据最好情况、最坏情况，时间复杂度也可以细分。</p><div class="md-table"><table><thead><tr><th style="text-align:center">复杂度</th><th style="text-align:center">描述</th></tr></thead><tbody><tr><td style="text-align:center">最好时间复杂度（Best Case）</td><td style="text-align:center">算法在最有利的输入下，需要多少操作。</td></tr><tr><td style="text-align:center">最坏时间复杂度（Worst Case）</td><td style="text-align:center">算法在最不利的输入下，需要多少操作。</td></tr><tr><td style="text-align:center">平均时间复杂度（Average Case）</td><td style="text-align:center">考虑各种可能输入及其出现概率后，算法平均需要多少操作。</td></tr></tbody></table></div><p>特别注意：平均时间复杂度不是简单地把最好情况和最坏情况相加除以二。它需要考虑输入分布和概率。在日常算法分析中，我们经常<strong>优先关注最坏情况</strong>，因为它能帮助我们了解算法在不利输入下的性能保障。</p><h3 id="三-空间复杂度">（三）空间复杂度</h3><h4 id="1-输入空间-辅助空间和输出空间">1、输入空间、辅助空间和输出空间</h4><p>程序在运行时，需要为变量划定内存空间。内存空间可以分为 <strong>输入空间</strong>、<strong>辅助空间</strong> 和 <strong>输出空间</strong>。</p><p>例如：</p><pre><code class="language-js">function sum(arr) {
+    let total = 0;
+    for (let i = 0; i &lt; arr.length; i++) {
+        total += arr[i];
+    }
+    return total;
+}</code></pre><p>这里存在三个内存空间，分别是 arr 数组、i 变量、total 变量。</p><p>① <strong>输入空间</strong>：这里的 arr 是用户传入的输入，占据的是 <strong>输入空间</strong>。输入空间的大小是用户决定的，和算法没有关系，因此不计入算法空间复杂度的计算。</p><p>② <strong>输出空间</strong>：参与构成算法的输出的变量（例如这里的 total 变量），占据的是 <strong>输出空间</strong>。输出空间也不计入算法空间复杂度的计算。</p><p>在上面的例子中，输入空间是 O(n)，输出空间是 O(1)。</p><p>③ <strong>辅助空间</strong>：为了将输入通过操作转化为输出而定义的变量所占据的空间。这里的 i 占据的就是 辅助空间。辅助空间的大小是算法可以决定的，因此参与算法空间复杂度的计算，结果为 O(1)。</p><p><strong>注意：</strong>不要把空间分类简单地等同于变量的声明位置，具体看下面的这个例子。</p><h4 id="2-辅助空间复杂度">2、辅助空间复杂度</h4><p>看下面的这个例子：</p><pre><code class="language-js">function C(arr) {
+    let result = [];
+    for (let i = 0; i &lt; arr.length; i++) {
+        let row = [];
+        for (let j = 0; j &lt; arr.length; j++) {
+            row.push(i + j);
+        }
+        result.push(row);
+    }
+    return result;
+}</code></pre><p>arr 占据输入空间，result、row 占据输出空间，i、j 则占据辅助空间。这里输入空间复杂度为 O(n)、输出空间复杂度为 O(n^2)，而辅助空间复杂度为 O(1)。</p><p><strong>注意：</strong>这里 row 虽然不是直接在结果返回的变量，但它是 result 的一部分。result 数组是一个二维数组，其元素保存着对每次循环中产生的 row 数组的<strong>引用</strong>，因此 row 数组在事实上是输出结果 result 的一部分；而 i、j 是计算到 row 里面的，是辅助变量，不属于输出结果。这意味着输出空间不一定只是输出变量本身所占据的空间。</p><p>为什么辅助空间复杂度为 O(1)？这是因为，虽然这里嵌套了两个循环，但循环增加的是时间复杂度，这里是空间复杂度，两个循环只占用2个变量，不会随着输入数据的增大而增大，因此空间复杂度仍为 O(1)。</p><p>再看下面这个例子 —— <strong>递归</strong>：</p><pre><code class="language-js">function countdown(n) {
+    if (n &lt;= 0) {
+        return;
+    }
+    countdown(n - 1);
+}</code></pre><p>这里最初始的 n 是输入空间，递归中的 n 是辅助空间，最终并不输出结果，因此无输出空间。</p><p>在这一实例中，输入数据 n 的大小会影响递归的次数，从而影响 countdown 函数的形参 n 的创建次数。因此，这一算法的辅助空间复杂度是 O(n)。</p><h4 id="3-辅助空间复杂度的坑">3、辅助空间复杂度的坑</h4><p>还是递归：</p><pre><code class="language-js">function countdown(n) {
+    if (n &lt;= 0) {
+        return;
+    }
+    countdown(n - 1);
+    countdown(n - 1);
+}</code></pre><p>这里时间复杂度是 O(2^n)，因为每次执行都会调两次自己，因此每一层调用的调用数都会翻倍（一共 n-1 层）。但这里的空间复杂度并不是 O(2^n)，而是 O(n)。为什么？</p><p>因为两个 countdown() 并不是同时执行的，而是<strong>先后执行</strong>的，在第二个执行发生时，第一个执行自己占据的资源已经被释放了。辅助空间复杂度关注的是函数运行时<strong>占据空间最多那一刻</strong>所占的内存空间，而不是所有曾经占据过的空间。这一点需要特别注意。</p><h3 id="四-综合例子">（四）综合例子</h3><pre><code class="language-js">function process(arr) {
+    let result = [];
+    for (let i = 0; i &lt; arr.length; i++) {
+        result.push(arr[i]);
+        if (i &gt; 0) {
+            result.pop();
+        }
+    }
+    return result;
+}</code></pre><p>这一题的时间复杂度是 O(n)（有一组 for 循环），而空间复杂度是 O(1) —— 循环中 result 的元素数始终在 1、2 间改变，不受输入数据的影响。</p><h2 id="三-详解大-o-分析法">三、详解大 O 分析法</h2><p>大 O 分析法关心的是增长的一种趋势，而非具体的增长公式。因此，算法的 O(n) 公式中，常数系数、常数项、低次项都是可以忽略的。例如：O(n^2+10n+100)=O(n^2)。</p><p>我们关心的不是某个特定输入规模下，算法究竟执行多少次，而是：当输入规模不断增大时，算法的执行次数按照什么<strong>规律</strong>增长？这就是渐近分析（Asymptotic Analysis）的核心思想。因此，在使用大 O 表示法时，我们往往只保留最高次项，并且略去其常数系数。</p><p>严格来说，O 表述的是 渐进上界，一个 O(n) 的算法，也可以说是 O(n^2)，因为 n 显然小于 n^2。有时我们希望把上下界都确定好，这时我们使用 渐近紧确界（Θ）来表述，例如 Θ(n^2)。</p><p>例如：</p><pre><code class="language-js">function test(arr) {
+    let count = 0;
+    for (let i = 0; i &lt; arr.length; i++) {
+        count++;
+    }
+    for (let i = 0; i &lt; arr.length; i++) {
+        for (let j = 0; j &lt; arr.length; j++) {
+            count++;
+        }
+    }
+    return count;
+}</code></pre><p>其 T(n) = n^2 + n，O(n) = n^2（也可以是 n^3 ······），Θ(n) = n^2。</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>

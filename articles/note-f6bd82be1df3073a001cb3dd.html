@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CSS学习——动画 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">CSS学习——动画</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-transition-%E5%8A%A8%E7%94%BB">一、transition 动画</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7">（一）基础属性</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF%E5%92%8C%E5%BB%B6%E6%97%B6">（二）变化曲线和延时</a>
+<a class="tab tabH4" href="#1-%E5%87%A0%E7%A7%8D%E9%A2%84%E8%AE%BE%E6%9B%B2%E7%BA%BF">1、几种预设曲线</a>
+<a class="tab tabH4" href="#2-%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF">2、贝塞尔曲线</a>
+<a class="tab tabH4" href="#3-%E5%BB%B6%E6%97%B6-delay">3、延时（delay）</a>
+<a class="tab tabH2" href="#%E4%BA%8C-transform-%E5%8F%98%E6%8D%A2">二、transform 变换</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%9D%90%E6%A0%87%E7%B3%BB%E5%92%8C%E5%8F%98%E6%8D%A2%E5%8E%9F%E7%82%B9">（一）坐标系和变换原点</a>
+<a class="tab tabH4" href="#1-%E5%88%9D%E5%A7%8B%E5%9D%90%E6%A0%87%E7%B3%BB">1、初始坐标系</a>
+<a class="tab tabH4" href="#2-%E5%8E%9F%E7%82%B9-transform-origin">2、原点 —— transform-origin</a>
+<a class="tab tabH3" href="#%E4%BA%8C-transform-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95">（二）transform 基本用法</a>
+<a class="tab tabH4" href="#1-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95">1、基础用法</a>
+<a class="tab tabH4" href="#2-%E5%A4%9A%E5%8A%A8%E4%BD%9C%E5%85%B3%E7%B3%BB">2、多动作关系</a>
+<a class="tab tabH4" href="#3-%E9%85%8D%E5%90%88-transition">3、配合 transition</a>
+<a class="tab tabH4" href="#4-%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0">4、其他参数</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E5%B8%B8%E8%A7%81%E7%9A%84-transform-%E5%8F%98%E6%8D%A2">（三）常见的 transform 变换</a>
+<a class="tab tabH4" href="#1-%E5%B9%B3%E7%A7%BB-translate">1、平移（translate）</a>
+<a class="tab tabH4" href="#2-%E6%97%8B%E8%BD%AC-rotate">2、旋转（rotate）</a>
+<a class="tab tabH4" href="#3-%E7%BC%A9%E6%94%BE-scale">3、缩放（scale）</a>
+<a class="tab tabH2" href="#%E4%B8%89-animation-%E5%85%B3%E9%94%AE%E5%B8%A7-keyframes-%E5%8A%A8%E7%94%BB">三、animation 关键帧（keyframes）动画</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%85%B3%E9%94%AE%E5%B8%A7%E5%8A%A8%E7%94%BB">（一）关键帧动画</a>
+<a class="tab tabH4" href="#1-%E5%A3%B0%E6%98%8E%E6%96%B9%E6%B3%95">1、声明方法</a>
+<a class="tab tabH4" href="#2-%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95">2、调用方法</a>
+<a class="tab tabH3" href="#%E4%BA%8C-%E8%BF%9B%E9%98%B6%E5%8F%82%E6%95%B0">（二）进阶参数</a>
+<a class="tab tabH4" href="#1-%E6%AC%A1%E6%95%B0-animation-iteration-count">1、次数 animation-iteration-count</a>
+<a class="tab tabH4" href="#2-%E6%96%B9%E5%90%91-animation-direction">2、方向 animation-direction</a>
+<a class="tab tabH4" href="#3-%E5%A1%AB%E5%85%85%E6%A8%A1%E5%BC%8F-animation-fill-mode">3、填充模式 animation-fill-mode</a>
+<a class="tab tabH4" href="#4-%E7%8A%B6%E6%80%81-animation-play-state">4、状态 animation-play-state</a>
+<a class="tab tabH3" href="#%E4%B8%89-%E7%BB%BC%E5%90%88%E7%A4%BA%E4%BE%8B">（三）综合示例</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <p>动画是 CSS 的核心功能之一，它使网页能够展现更多生动、丰富的内容。</p><p>CSS 动画是 Web 设计艺术的核心内容之一。不过我们设计页面时需要注意动画的适用范围：在展示性的网页和普通应用程序方面，动画可以提升用户的使用体验；而在生产力工具方面，则应当尽量克制地使用 CSS 动画，防止无关动画对工作效率造成影响。</p><p>下面是关于 CSS 动画的介绍，让我们开始吧。</p><h2 id="一-transition-动画">一、transition 动画</h2><p>在 CSS 中，许多属性都有可预测的变化（都有<strong>过程</strong>）。例如：</p><pre><code class="language-css">opacity:0 → opacity:1;            /*属性内容由 0 逐渐变为 0.1、0.2、0.4 ··· 1.0*/
+padding:10px → padding:50px;      /*属性内容由 10px 逐渐变为 20px、30px ··· 50px*/</code></pre><p>在不定义动画的时候，这些属性的内容是突变的，因而元素的样式是瞬时变化的，表现得比较突兀。但是，如果我们利用这些属性的内容的变化过程，将内容的变化从突变变成逐渐变化，就能够使样式的变化变得平缓——这就是 CSS <strong>动画</strong>。</p><p>实现 CSS 动画的最简单方法是 transition，它会根据属性内容的变化，自动计算出相应的 CSS 动画，在定义简单动画时非常简便。</p><h3 id="一-基础属性">（一）基础属性</h3><p>transition 属性的语法如下：</p><pre><code class="language-css">transition:&lt;动画属性1&gt; &lt;时间&gt; &lt;变化曲线&gt; &lt;延时&gt;,&lt;动画属性2&gt; &lt;时间&gt; &lt;变化曲线&gt; &lt;延时&gt; ····;</code></pre><p>多个动画间以 “ , ” 分隔。例如：</p><pre><code class="language-css">.button {
+  background-color:white;
+  color:black;
+  transition:background-color .15s,color .15s;
+  &amp;:hover {
+    background-color:blue;
+    color:white;
+  }
+}</code></pre><p>我们暂时缺省第三、四个属性（变化曲线和延时）。在这里，我们为 button 加上了背景颜色和文本颜色的过渡，使背景色逐渐由白变蓝、文本色由黑变白，动画时间均为 0.15s。</p><p>注意不能写多个 transition，否则后面的会全部覆盖前面的。例如：</p><pre><code class="language-css">.text {
+  transition:color .15s,background-color .15s;
+  transition:padding .15s;
+}</code></pre><p>最后只会剩下 padding 的 0.15s 动画。</p><p>transition 只对可插值属性生效，对 display、height: auto 无效。</p><h3 id="二-变化曲线和延时">（二）变化曲线和延时</h3><p>变化曲线决定了属性的内容是如何变化的，默认是 ease（刚开始缓慢变化，中间加快，最后又变慢）。</p><h4 id="1-几种预设曲线">1、几种预设曲线</h4><p>可以使用关键字来调用一些预设曲线，例如：</p><ul><li><p>—— linear（线性）：匀速变化，全程变化速度不变。</p></li><li><p>—— ease-in：慢进快出。</p></li><li><p>—— ease-out：快进慢出。</p></li><li><p>—— ease-in-out：两端慢、中间快。</p></li></ul><pre><code class="language-css">.button {
+  transition:color .15s ease-in-out;
+}</code></pre><p>总之，ease-* 系列关键字，决定了动画是否在开始/结束时 “缓入缓出”。</p><p>注意：ease-in-out 和 ease 均为淡入淡出，但 ease-in-out 是对称的（初/末速度均为0），更加平滑；ease 是非对称的（初速度不为0）。</p><h4 id="2-贝塞尔曲线">2、贝塞尔曲线</h4><p>如果使用关键字定义仍然不能满足动画需要，则可以使用 <strong>贝塞尔曲线</strong> cubic-bezier 自定义动画曲线。</p><p>例如：</p><pre><code class="language-css">.button {
+  transition:background-color .15s cubic-bezier(0.29, 1.01, 1, -0.68);
+}</code></pre><p>现在的前端 IDE 大部分都已经有很直观的贝塞尔曲线编辑器，无需背记相关规则。</p><h4 id="3-延时-delay">3、延时（delay）</h4><p>第四个属性是延时，它决定了动画在播放前的 “耽搁”。例如，延时被设置为 0.4s 时，当动画被触发时，浏览器会等待 0.4s 才执行实际的动画操作。</p><h2 id="二-transform-变换">二、transform 变换</h2><p>transform 规定了元素的几何变换（移动、旋转、缩放等），我们可以使用 transform 属性的变化，配合 CSS 动画语法使用，制作出几何方面的 CSS 动画。</p><h3 id="一-坐标系和变换原点">（一）坐标系和变换原点</h3><h4 id="1-初始坐标系">1、初始坐标系</h4><p>在 transform 变换中，采取如下坐标系：</p><ul><li><p>—— X 轴：平行于底部，从左指向右。</p></li><li><p>—— Y 轴：平行于左部，从上指向下。</p></li><li><p>—— Z 轴：垂直于屏幕面，由屏幕内指向屏幕外。</p></li></ul><p><img src="../assets/note-media/24fa998bf7a9a6dcd39cb379075b014b.png" alt="未标题-1" loading="lazy" width="500"></p><h4 id="2-原点-transform-origin">2、原点 —— transform-origin</h4><p>可使用 transform-origin 属性来设置 transform 变化的原点。基本用法如下：</p><pre><code class="language-css">transform-origin: &lt;X&gt; &lt;Y&gt; &lt;Z&gt;</code></pre><p>三个坐标参数可以是像素，X、Y轴参数也可以是百分数、关键字（left、right、center），用于设置变换原点的位置。如果不是 3D 变化，可以缺省 &lt;Z&gt;。</p><p>例如：</p><pre><code class="language-css">transform-origin: center center;  /* 默认，元素中心 */
+transform-origin: left top;       /* 左上角 */
+transform-origin: 0 0;            /* 左上角，坐标写法 */
+transform-origin: 50% 100%;       /* 底部中心 */
+</code></pre><p>注意：transform-origin 的坐标系和上面说的坐标系是一样的，但是 top、bottom 等关键字是 “形态学位置”，因此 top 永远指代的是屏幕的上部，它指代的并不是 Y 最大、而是 Y 最小的地方。例如，下面的写法是等价的：</p><pre><code class="language-css">transform-origin: right top;
+transform-origin: 100% 0%;</code></pre><h3 id="二-transform-基本用法">（二）transform 基本用法</h3><h4 id="1-基础用法">1、基础用法</h4><p>transform 的用法如下：</p><pre><code class="language-css">transform: &lt;act1&gt; &lt;act2&gt; ·····;</code></pre><p>例如：</p><pre><code class="language-css">transform:rotateX(90deg) translateX(20px);</code></pre><p>注意，多个动作之间以空格而非逗号分隔。另外，transform 属性会互相覆盖，一个 CSS 块中不能写两个 transform。例如，上面的属性不能拆为下面的写法：</p><pre><code class="language-css">transform:rotateX(90deg);
+transform:translateX(20px);</code></pre><p>下面的 transform 属性会覆盖上面的，导致最后只剩下下面的动作。</p><h4 id="2-多动作关系">2、多动作关系</h4><p>执行动作时，浏览器按从左到右的顺序执行。因此，下面两种写法是不同的：</p><pre><code class="language-css">transform:translateX(-50px) rotateZ(30deg);
+transform:rotateZ(30deg) translateX(-50px);</code></pre><p>前者是先平移后旋转，后者是先旋转后平移。</p><p>为什么会这样呢？因为元素的动作是以自身的局部坐标系来执行的。元素的初始局部坐标系为初始坐标系，而变换会使元素的坐标系发生改变（例如，rotateZ(30deg) 后 X 轴也会以 Z 轴为轴顺时针旋转 30 度），导致 translateX 等的实际语义改变，产生意料之外的效果。</p><h4 id="3-配合-transition">3、配合 transition</h4><p>可配合 transition 实现 transform 的变换：</p><pre><code class="language-css">.button {
+  transition:transform .15s;
+}
+.button:hover {
+  transform:translateX(20px);
+}</code></pre><p>button 被 hover 后会出现 X 轴方向 0.15s 的 20px 平滑滑动。</p><p>注意：transition 中属性写为 transform，不写具体动作。</p><h4 id="4-其他参数">4、其他参数</h4><p>可用 backface-visibility 属性控制 3D 变换时是否显示元素的背面。</p><pre><code class="language-css">backface-visibility: hidden;        /* 隐藏 */
+backface-visibility: visible;       /* 显示 */</code></pre><p>在做翻转卡片时，可通过 hidden 实现卡片的隐藏效果；普通 3D 则可使用 visible。默认为 visible。</p><h3 id="三-常见的-transform-变换">（三）常见的 transform 变换</h3><p>transform 变化对元素位置的改变有些类似 position:relative —— 元素的实际位置并未改变（未脱离原有文档流），但视觉位置发生了改变。</p><h4 id="1-平移-translate">1、平移（translate）</h4><p>将元素平移一定的距离。平移语法有四种：</p><pre><code class="language-js">translateX(&lt;x&gt;);
+translateY(&lt;y&gt;);
+translateZ(&lt;z&gt;);
+translate(&lt;x&gt;,&lt;y&gt;);</code></pre><p>可使元素分别沿着 X、Y、Z 轴方向平移。</p><p>第四种语法是合并语法，可同时使元素沿着 X、Y 方向移动。其中 Y 的内容可以缺省（默认为 0）。</p><h4 id="2-旋转-rotate">2、旋转（rotate）</h4><p>使元素旋转一定的角度（正数为顺时针旋转）。旋转语法也有三种：</p><pre><code class="language-css">rotateX(&lt;angle&gt;);
+rotateY(&lt;angle&gt;);
+rotateZ(&lt;angle&gt;);
+</code></pre><p>角度需要带上单位，例如 deg、rad、turn（圆周）、grad 等。</p><p>此外，还有综合写法 rotate3d：</p><pre><code class="language-js">rotate3d(&lt;x&gt;,&lt;y&gt;,&lt;z&gt;,&lt;angle&gt;);</code></pre><p>它的意思是：以空间向量（x,y,z）为旋转轴旋转一定角度。例如：</p><pre><code class="language-css">.card {
+  transform:rotate3d(1,1,0,30deg)
+}</code></pre><p>意味着以空间向量 (1,1,0) 为旋转轴旋转 30 度。</p><p>此外还有一个最简写法 rotate(&lt;angle&gt;)，它等价于 rotateZ(&lt;angle&gt;)，更加简洁。</p><h4 id="3-缩放-scale">3、缩放（scale）</h4><p>和上面基本一致，但 scale 接受的参数必须是百分类数（如 50%、0.5），不能写 50px 等。</p><p>scale 有一种合并语法，是：</p><pre><code class="language-js">scale(&lt;sx&gt;,&lt;sy&gt;);</code></pre><p>意味着分别沿着 X、Y 轴方向缩放。</p><h2 id="三-animation-关键帧-keyframes-动画">三、animation 关键帧（keyframes）动画</h2><p>transition 动画已经可以解决一些基本的动画问题，但它本质上是对 CSS 属性内容的 “初→末” 变化作插帧平滑处理。如果我们想要精确控制整个 CSS 样式变化的过程（例如，指定动画播放30%时rotateZ程度为50deg），而不仅仅是根据 CSS 初/末样式自动生成简单的过程动画，就需要引入 keyframes <strong>关键帧动画</strong>。</p><h3 id="一-关键帧动画">（一）关键帧动画</h3><h4 id="1-声明方法">1、声明方法</h4><p>关键帧动画需要使用 @keyframes（注意是<strong>复数</strong>）规则声明。语法如下：</p><pre><code class="language-css">@keyframes &lt;动画名&gt; {
+  百分进度 {
+    
+  }
+  ······
+}</code></pre><p>例如：</p><pre><code class="language-css">@keyframes iconUpDown {
+  0% {
+    transform:translateY(0px);
+  }
+  40% {
+    transform:translateY(-10px);
+  }
+  80% {
+    transform:translateY(5px);
+  }
+  100% {
+    transform:translateY(0px);
+  }
+}</code></pre><p>可使用 from、to 关键字来表示 0%、100%，其作用完全相同。</p><p>注意：transition 和 animation 相同，均不支持离散属性的过渡（如 display:none）。另外，如果一个元素的 display 为 none，则其动画不会被播放，只有 display 不再为 none 时才会开始播放。</p><h4 id="2-调用方法">2、调用方法</h4><p>可使用 animation 参数引入 keyframes 动画。animation 基本语法和 transition 很像，为：</p><pre><code class="language-css">.diva {
+  animation:&lt;名字&gt; &lt;持续时间&gt; &lt;变化曲线&gt; &lt;延迟时间&gt;,······;
+}</code></pre><p>例如：</p><pre><code class="language-css">.icon {
+  animation:iconUpDown .15s ease-in-out .15s;
+}</code></pre><p>这里的 ease-in-out（淡入淡出）关键字（或贝塞尔曲线）和 transition 语法一致，但效果有区别：它会作用于所有关键帧之间。例如：</p><pre><code class="language-css">@keyframes slide {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(100px); }
+  100% { transform: translateX(0); }
+}
+.box {
+  animation: slide 1s ease-in-out;
+}</code></pre><p>由于 50% 时速度为0，ease-in-out 又使动画在 50% 时缓入缓出，因此视觉上 50% 时看起来会像是暂时停住了。</p><h3 id="二-进阶参数">（二）进阶参数</h3><p>其实 animation 的完整语法如下：</p><pre><code class="language-css">animation:&lt;名字&gt; &lt;持续时间&gt; &lt;变化曲线&gt; &lt;延迟时间&gt; &lt;次数&gt; &lt;方向&gt; &lt;填充模式&gt; &lt;状态&gt;;</code></pre><p>后四个属性是可缺省的高级属性。由于它们的关键字、写法等都完全不同，因此可以任意缺省，浏览器能够识别我们写的是哪个属性。</p><h4 id="1-次数-animation-iteration-count">1、次数 animation-iteration-count</h4><p>决定了动画的播放次数，默认为 1。</p><p>次数可以是小数，例如 2.5（播放2.5次，第三次播放只播放一半）；也可以使用关键字 infinite（无限），使动画循环播放。</p><h4 id="2-方向-animation-direction">2、方向 animation-direction</h4><p>决定了动画的播放方向（如 100% =&gt; 0%）。其几个取值为：</p><ul><li><p>—— normal：默认值，0 =&gt; 100%。</p></li><li><p>—— reverse：反转，100% =&gt; 0%（倒过来播放动画）。</p></li><li><p>—— alternate：交替，奇数次播放为 normal，偶数次播放为 reverse。</p></li><li><p>—— alternate-reverse：反转交替，交替的播放行为反过来。</p></li></ul><h4 id="3-填充模式-animation-fill-mode">3、填充模式 animation-fill-mode</h4><p>决定了动画开始前、结束后，元素是否仍然具有动画所规定的一些属性。几种取值如下：</p><ul><li><p>—— none：默认值，不保留动画效果。动画结束后，元素将瞬间变回动画播放前的样式；当有 delay 播放时，delay 时间内元素保持动画播放前的样式。</p></li><li><p>—— forwards：向前。动画结束后，元素的样式将保持在最后一帧</p></li><li><p>—— backwards：向后。动画开始但仍然处于 delay 中时，将动画的第一帧作为元素的样式，直到动画开始。</p></li><li><p>—— both：同时具有 forwards、backwards 属性。</p></li></ul><h4 id="4-状态-animation-play-state">4、状态 animation-play-state</h4><p>这一属性有两个内容，分别是 running、paused（运行中、停止）。若播放中的动画被赋予 animation-play-state:paused，则动画会暂停。这一属性可用于精细控制动画。</p><h3 id="三-综合示例">（三）综合示例</h3><pre><code class="language-css">.leftbar {
+  position:fixed;
+  width:50px;
+  height:50px;
+  background-color:blue;
+  animation:anim 1s linear &lt;delay缺省&gt; infinite normal both;
+}
+.leftbar:hover {
+  animation-play-state:paused;
+}
+@keyframes anim {
+  to {
+    transform:rotate(360deg);
+  }
+}</code></pre>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>
