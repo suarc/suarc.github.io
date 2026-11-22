@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JS学习——第九章 边界处理 · TECH NOTES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/code-theme.css">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+
+<body class="article-page">
+    <nav aria-label="主导航">
+        <a class="title" href="../index.html">TECH NOTES</a>
+        <form class="searchBar" role="search">
+            <input type="search" aria-label="搜索笔记" aria-controls="search-results" placeholder="搜索笔记" autocomplete="off" />
+            <button class="button" type="submit" aria-label="搜索" aria-controls="search-results" aria-expanded="false"><i class="fa-solid fa-search" aria-hidden="true"></i></button>
+        </form>
+        <div class="desktop-links"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div>
+<details class="mobile-links"><summary class="navBtn">更多</summary><div class="mobile-menu"><a class="navBtn" href="../index.html#notes">笔记</a><a class="navBtn" href="https://github.com/suarc">GitHub</a><a class="navBtn" href="#about">关于</a></div></details>
+    </nav>
+    <div class="searchContent" id="search-results" hidden>
+        <p class="searchStatus" role="status"></p>
+        <div class="searchItems" aria-label="搜索结果"></div>
+    </div>
+    <main>
+        <h1 class="title">JS学习——第九章 边界处理</h1>
+        <div class="descriptions">
+            <img src="../assets/img/avatar.jpg" alt="" />
+            <p class="text">SuArch</p>
+        </div>
+    </main>
+    <section class="content">
+        <div class="aside">
+            <div class="title">当前目录</div>
+            <a class="tab tabH2" href="#%E4%B8%80-%E7%A9%BA%E5%86%85%E5%AE%B9%E5%8F%8A%E5%85%B6%E5%B8%83%E5%B0%94">一、空内容及其布尔</a>
+<a class="tab tabH4" href="#1-%E7%A9%BA%E5%86%85%E5%AE%B9">1、空内容</a>
+<a class="tab tabH4" href="#2-truthy-%E5%92%8C-falsy">2、truthy 和 falsy</a>
+<a class="tab tabH2" href="#%E4%BA%8C-%E6%95%B0%E7%BB%84%E5%AF%B9%E7%A9%BA%E5%86%85%E5%AE%B9%E7%9A%84%E5%A4%84%E7%90%86">二、数组对空内容的处理</a>
+<a class="tab tabH4" href="#1-%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%BA%E7%A9%BA">1、如何判断数组为空？</a>
+<a class="tab tabH4" href="#2-%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E5%AF%B9%E7%A9%BA%E6%95%B0%E7%BB%84%E7%9A%84%E5%A4%84%E7%90%86">2、数组方法对空数组的处理</a>
+<a class="tab tabH2" href="#%E4%B8%89-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8F%AF%E9%80%89%E9%93%BE%E5%92%8C%E7%A9%BA%E5%80%BC%E5%90%88%E5%B9%B6">三、对象的可选链和空值合并</a>
+<a class="tab tabH3" href="#%E4%B8%80-%E5%8F%AF%E9%80%89%E9%93%BE-%E6%93%8D%E4%BD%9C%E7%AC%A6">（一）可选链 “ ?. ” 操作符</a>
+<a class="tab tabH4" href="#1-%E5%BC%95%E5%85%A5">1、引入</a>
+<a class="tab tabH4" href="#2-%E5%8F%AF%E9%80%89%E9%93%BE%E6%93%8D%E4%BD%9C%E7%AC%A6">2、可选链操作符</a>
+        </div>
+        <div class="decorationLine"></div>
+        <article class="main" aria-label="笔记正文">
+            <p>边界处理问题是编程语言中的一种重要问题，它问我们的是：当输入为边界情况（如空数组、空对象、空字符串等）时，程序应当如何响应？</p><p>例如：</p><pre><code class="language-js">function calc(a,b)
+{
+  console.log(a/b);
+}</code></pre><p>这是一个简单的除法计算函数。在大部分情况下它都可以正常工作，但一旦输入 b = 0，就会出现 0 / 0 型错误，得到 NaN。这里的 b = 0 就是一种边界情况。</p><p>如果我们对 b = 0 的取值做特殊规定，提醒用户 b 输错了，例如：</p><pre><code class="language-js">function calc(a,b)
+{
+  if(b!=0) console.log(a/b);
+  else console.log(&#39;ERROR!&#39;);
+}</code></pre><p>这就是一种简单的边界处理。</p><h2 id="一-空内容及其布尔">一、空内容及其布尔</h2><p>边界问题的一大部分是在 <strong>空内容</strong> 上发生的，因此我们先介绍空内容。</p><h4 id="1-空内容">1、空内容</h4><p>JS 中有五种常见的空内容：</p><pre><code class="language-js">const a = [];          // 空数组
+const b = &quot;&quot;;          // 空字符串
+const c = {};          // 空对象
+const d = null;        // 空值
+let e;                 // undefined</code></pre><p>注意，[]、{} 是空数组/对象，但它们仍然是数组/对象。</p><h4 id="2-truthy-和-falsy">2、truthy 和 falsy</h4><p>现在设想一个函数：</p><pre><code class="language-js">function test(a)
+{
+  if(a) console.log(&#39;TRUE&#39;);
+  else console.log(&#39;FALSE&#39;);
+}</code></pre><p>传入 undefined、NaN、null 时，正如我们的预期，得到的是 FALSE。然而当我们传入 []、{} 时，得到的却是 TRUE。为什么？</p><p>这是因为 JS 中除了普通布尔（true/false，0/1）外，还有<strong>广义布尔</strong>（truthy、falsy）。当非布尔内容被传入判断语句时，JS 会根据其广义布尔，决定判断语句是否成立。</p><p>下面几种内容在 JS 的广义布尔中被判为 falsy：</p><pre><code class="language-text">false
+0
+-0
+0n
+&quot;&quot;
+null
+undefined
+NaN</code></pre><p>除了这几个内容外，剩下的内容都会被判为 truthy，因此 []、{} 得到的是 TRUE。</p><h2 id="二-数组对空内容的处理">二、数组对空内容的处理</h2><h4 id="1-如何判断数组为空">1、如何判断数组为空？</h4><p>空数组 [] 仍然是数组，在 if 中会被判为 truthy，因此不能用 if(arr) 的方式判断是否为非空数组，我们需要改用 length 方式。例如：</p><pre><code class="language-js">if(arr.length == 0) console.log(&#39;empty&#39;);
+if(Object.keys(obj).length == 0) console.log(&#39;empty&#39;);</code></pre><h4 id="2-数组方法对空数组的处理">2、数组方法对空数组的处理</h4><p>map()、filter()、some() 都是普通的 “存在性” 问题，因此处理方法符合直觉，不用直接记。</p><p>every() 方法对空数组的结果是 true，因为 every 看起来是 “全称问题”，但它是以 “是否存在不符合条件的元素” 的存在性方法来决定结果的。</p><p>reduce() 方法中，不事先声明 sum 累积变量的初始值，默认会以第一个元素的值作为初始值，并且从第二个元素开始 reduce。此时若数组为空，因为找不到第一个元素，会报 TypeError。</p><h2 id="三-对象的可选链和空值合并">三、对象的可选链和空值合并</h2><h3 id="一-可选链-操作符">（一）可选链 “ ?. ” 操作符</h3><h4 id="1-引入">1、引入</h4><p>设想现在有一段业务代码：</p><pre><code class="language-js">function getAddress(obj)
+{
+  return obj.location.city + &#39; &#39; + obj.location.street;
+}
+const student1 = {
+  name:&quot;Bob&quot;,
+  score:90,
+  location: {
+    city:&#39;New York&#39;,
+    street:&#39;1234 Rd&#39;
+  }
+}
+const student2 = {
+  name:&quot;Alice&quot;,
+  score:90
+}
+console.log(getAddress(student1));        // New York 1234 Rd
+console.log(getAddress(student2));        // TypeError</code></pre><p>（设想这里 Alice 的住址信息并未被采集，所以不具备 location 属性。）</p><p>当我们试图获取 Alice 的地址时，JS 报错 TypeError，导致程序无法继续执行。原因在于：Alice 并无 location 属性，因此 obj.location 的结果是 undefined。JS 会尝试去取 undefined.city，这就得到了 TypeError。 </p><p>我们当然可以用使 student2 包含 location 属性（且其内容全部初始化为 undefined）的方法解决，但实际的业务代码中，我们并不总是有修改 obj 格式、事先用 undefined 填充好所有缺省属性的条件。因此，这里我们要引入<strong>可选链</strong>操作符 “ ?. ”。</p><h4 id="2-可选链操作符">2、可选链操作符</h4><p>可选链操作符 ?. 的语法如下：</p><pre><code class="language-js">obj.location?.city</code></pre><p>它的意思是：如果 ?. 左侧的 obj.location 存在，则将对象链继续向右延申，获得 obj.location.city；否则不延申出去，直接报 undefined。</p><p>可选链操作符支持多次使用，例如：</p><pre><code class="language-js">obj?.location?.city</code></pre><p>这样，如果 obj 不存在，也不会报 TypeError，而是直接得到 undefined。</p><p>3、</p><p>try catch</p>
+        </article>
+    </section>
+    <footer id="about">
+        <div class="copyright">此网站主要为 HUMAN CODING</div>
+        <a class="link" href="https://github.com/suarc"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+    </footer>
+    <script src="../assets/js/search-index.js"></script>
+    <script src="../assets/js/site.js"></script>
+    <script src="../assets/js/highlight.min.js"></script>
+    <script src="../assets/js/behavior2.js"></script>
+</body>
+
+</html>
